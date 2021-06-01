@@ -1,0 +1,34 @@
+{
+  "dictionaries": [
+    {
+      "name": "Dictionary example 1",
+      "cards": [
+        {
+          "word": "Word to guess example 1",
+          "forbiddenWords": [
+            "forbidden word 1",
+            "forbidden word 2",
+            "forbidden word 3",
+            "forbidden word 4",
+            "forbidden word 5"
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Dictionary example 2",
+      "cards": [
+        {
+          "word": "Word to guess example 2",
+          "forbiddenWords": [
+            "forbidden word 1",
+            "forbidden word 2",
+            "forbidden word 3",
+            "forbidden word 4",
+            "forbidden word 5"
+          ]
+        }
+      ]
+    }
+  ]
+}
