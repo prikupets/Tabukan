@@ -1,3 +1,6 @@
 <resources>
-    <string name="app_name">ForbiddenWords</string>
+    <string name="app_name">Forbidden Words</string>
+    <string name="next_card">Next</string>
+    <string name="title_tooltip">explain this word</string>
+    <string name="forbidden_words_tooltip">without using these:</string>
 </resources>
