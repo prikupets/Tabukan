@@ -1,31 +1,66 @@
 {
-  "dictionaries": [
+  "decks": [
     {
-      "name": "Dictionary example 1",
+      "name": "Основная колода",
       "cards": [
         {
-          "word": "Word to guess example 1",
+          "title": "Абрикос",
           "forbiddenWords": [
-            "forbidden word 1",
-            "forbidden word 2",
-            "forbidden word 3",
-            "forbidden word 4",
-            "forbidden word 5"
+            {"text": "Персик"},
+            {"text": "Курага"},
+            {"text": "Бархатный"},
+            {"text": "Фрукт"},
+            {"text": "Слива"}
           ]
-        }
-      ]
-    },
-    {
-      "name": "Dictionary example 2",
-      "cards": [
+        },
         {
-          "word": "Word to guess example 2",
+          "title": "Радуга",
           "forbiddenWords": [
-            "forbidden word 1",
-            "forbidden word 2",
-            "forbidden word 3",
-            "forbidden word 4",
-            "forbidden word 5"
+            {"text": "Цвет"},
+            {"text": "Семь"},
+            {"text": "Явление"},
+            {"text": "Дождь"},
+            {"text": "Каждый"}
+          ]
+        },
+        {
+          "title": "Кумыс",
+          "forbiddenWords": [
+            {"text": "Кисломолочный"},
+            {"text": "Кобыла"},
+            {"text": "Хмель"},
+            {"text": "Азия"},
+            {"text": "Брожение"}
+          ]
+        },
+        {
+          "title": "Убыток",
+          "forbiddenWords": [
+            {"text": "Ущерб"},
+            {"text": "Урон"},
+            {"text": "Потеря"},
+            {"text": "Прибыль"},
+            {"text": "Терпеть"}
+          ]
+        },
+        {
+          "title": "Дефект",
+          "forbiddenWords": [
+            {"text": "Брак"},
+            {"text": "Недостаток"},
+            {"text": "Изъян"},
+            {"text": "Заводской"},
+            {"text": "Повреждение"}
+          ]
+        },
+        {
+          "title": "Лентяй",
+          "forbiddenWords": [
+            {"text": "Трудолюбие"},
+            {"text": "Апатия"},
+            {"text": "Нахлебник"},
+            {"text": "Вялый"},
+            {"text": "Порок"}
           ]
         }
       ]
