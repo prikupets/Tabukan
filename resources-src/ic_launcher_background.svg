@@ -1,0 +1,21 @@
+<svg id="Слой_1" data-name="Слой 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 390.5 390.5">
+  <defs>
+    <style>
+      .cls-1 {
+        fill: #e1a165;
+      }
+
+      .cls-2 {
+        fill: none;
+        stroke: #222220;
+        stroke-miterlimit: 10;
+        stroke-width: 3px;
+      }
+    </style>
+  </defs>
+  <title>ic_launcher_background</title>
+  <g>
+    <path class="cls-1" d="M327,2.79H61.5a60,60,0,0,0-60,60v265.5a60,60,0,0,0,60,60H327a60,60,0,0,0,60-60V62.79a60,60,0,0,0-60-60"/>
+    <rect class="cls-2" x="2.5" y="2.79" width="385.5" height="385.5" rx="60"/>
+  </g>
+</svg>
