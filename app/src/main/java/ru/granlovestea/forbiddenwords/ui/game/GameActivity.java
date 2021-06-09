@@ -5,8 +5,14 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 
-import ru.granlovestea.forbiddenwords.R;
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.MobileAds;
+
 import ru.granlovestea.forbiddenwords.databinding.ActivityGameBinding;
+import ru.granlovestea.forbiddenwords.ui.game.deck.DeckViewPagerAdapter;
+import ru.granlovestea.forbiddenwords.ui.game.deck.pagetransformer.HorizontalFlip;
+import ru.granlovestea.forbiddenwords.ui.game.deck.pagetransformer.VerticalFlip;
+import ru.granlovestea.forbiddenwords.ui.game.deck.pagetransformer.ZoomOut;
 
 public class GameActivity extends AppCompatActivity implements GameContract.View {
     private GameContract.Presenter presenter;
@@ -22,12 +28,15 @@ public class GameActivity extends AppCompatActivity implements GameContract.View
         if(presenter == null) {
             presenter = new GamePresenter();
         }
+
+        setUpViews();
     }
 
     @Override
     protected void onStart() {
         super.onStart();
         presenter.attach(this);
+        initAds();
     }
 
     @Override
@@ -37,12 +46,32 @@ public class GameActivity extends AppCompatActivity implements GameContract.View
     }
 
     @Override
-    public void onShowSampleTextClicked(View view) {
-        presenter.onShowSampleTextClicked();
+    public void setOnNextCardClickedListener() {
+        binding.nextCard.setOnClickListener((v) -> presenter.onNextCardClicked());
     }
 
     @Override
-    public void setExampleText(String text) {
-        binding.exampleText.setText(text);
+    public void showAd() {
+        AdRequest adRequest = new AdRequest.Builder().build();
+        binding.adView.loadAd(adRequest);
+    }
+
+    @Override
+    public void swipeNextCard() {
+        binding.deckViewPager.setCurrentItem(binding.deckViewPager.getCurrentItem() + 1);
+    }
+
+    private void setUpViews() {
+        setSupportActionBar(binding.toolbarWrapper.toolbar);
+
+        binding.deckViewPager.setAdapter(new DeckViewPagerAdapter(this));
+        binding.deckViewPager.setPageTransformer(new HorizontalFlip());
+
+        setOnNextCardClickedListener();
+    }
+
+    private void initAds() {
+        MobileAds.initialize(getApplicationContext(), initializationStatus -> { });
+        presenter.initAds();
     }
 }

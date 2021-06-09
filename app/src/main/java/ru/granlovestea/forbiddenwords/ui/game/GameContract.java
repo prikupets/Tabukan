@@ -1,17 +1,19 @@
 package ru.granlovestea.forbiddenwords.ui.game;
 
+import android.content.Context;
 import android.view.View;
 
 public class GameContract {
     interface View {
-        void onShowSampleTextClicked(android.view.View view);
-        void setExampleText(String text);
+        void setOnNextCardClickedListener();
+        void swipeNextCard();
+        void showAd();
     }
 
     interface Presenter {
-        void attach(View view) ;
+        void attach(View view);
         void detach();
-
-        void onShowSampleTextClicked();
+        void onNextCardClicked();
+        void initAds();
     }
 }
