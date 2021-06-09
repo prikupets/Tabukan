@@ -1,0 +1,12 @@
+<TextView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="0dp"
+    android:layout_weight="1"
+    app:autoSizeTextType="uniform"
+    app:autoSizeMinTextSize="12sp"
+    app:autoSizeMaxTextSize="30sp"
+    app:autoSizeStepGranularity="6sp"
+    android:textAllCaps="true"
+    android:textColor="@color/red_lightest"
+    android:textAlignment="center" />
