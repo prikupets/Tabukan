@@ -1,13 +1,15 @@
 package ru.granlovestea.forbiddenwords.model.domain;
 
+import java.io.Serializable;
+import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
 
-public class Dictionary {
+public class Deck implements Serializable {
     private String name;
     private List<Card> cards;
 
-    public Dictionary(String name, List<Card> cards) {
+    public Deck(String name, List<Card> cards) {
         this.name = name;
         this.cards = cards;
     }
@@ -32,7 +34,7 @@ public class Dictionary {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        Dictionary that = (Dictionary) o;
+        Deck that = (Deck) o;
         return Objects.equals(name, that.name) &&
                 Objects.equals(cards, that.cards);
     }
@@ -40,5 +42,9 @@ public class Dictionary {
     @Override
     public int hashCode() {
         return Objects.hash(name, cards);
+    }
+
+    public void shuffle() {
+        Collections.shuffle(cards);
     }
 }

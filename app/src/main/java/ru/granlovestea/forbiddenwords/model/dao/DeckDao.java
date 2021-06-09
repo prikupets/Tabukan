@@ -8,15 +8,18 @@ import java.util.List;
 
 import ru.granlovestea.forbiddenwords.R;
 import ru.granlovestea.forbiddenwords.model.DataManager;
-import ru.granlovestea.forbiddenwords.model.domain.Dictionary;
+import ru.granlovestea.forbiddenwords.model.domain.Deck;
 
-public class DictionaryDao {
-    public List<Dictionary> getAll() {
-        Type dictionaryListType = new TypeToken<List<Dictionary>>(){}.getType();
+public class DeckDao {
+
+    // TODO: replace JSON with DB.
+    public Deck getDeckByIndex(int deckIndex) {
+        Type deckType = new TypeToken<Deck>(){}.getType();
 
         return DataManager.fromJSON(
                 DataManager.fromJSON(R.raw.content, JsonObject.class)
-                        .getAsJsonArray("dictionaries"),
-                dictionaryListType);
+                        .getAsJsonArray("decks")
+                        .get(deckIndex),
+                deckType);
     }
 }

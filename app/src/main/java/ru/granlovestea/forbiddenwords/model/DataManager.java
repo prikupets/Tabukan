@@ -14,6 +14,9 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.lang.reflect.Type;
 
+import ru.granlovestea.forbiddenwords.model.domain.Deck;
+
+
 public class DataManager {
     private static Gson gson;
     private static Resources resources;
@@ -37,6 +40,10 @@ public class DataManager {
 
     public static <T> T fromJSON(int id, Type type) {
         return gson.fromJson(getResourceInputStreamReader(id), type);
+    }
+
+    public static Deck fromJSON(JsonElement jsonElement, Type type) {
+        return gson.fromJson(jsonElement, type);
     }
 
     private static InputStreamReader getResourceInputStreamReader(int id) {
