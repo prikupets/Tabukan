@@ -62,7 +62,7 @@
                             android:id="@+id/title_tooltip"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:text="@string/title_tooltip"
+                            android:shtext="@string/title_tooltip"
                             android:textAlignment="center"
                             android:textColor="@color/teal_dark_translucent"
                             android:textSize="16sp"/>
