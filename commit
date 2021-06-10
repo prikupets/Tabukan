@@ -1,0 +1,149 @@
+[33mcommit dba386be313b85a068acaf84f7d09458d2eadff9[m[33m ([m[1;36mHEAD -> [m[1;32mmaster[m[33m)[m
+Author: mangosteenfruitlover <Diana.korepanowa@mail.ru>
+Date:   Thu Jun 10 02:14:28 2021 +0300
+
+    Fixed fragment_card.xml(title_tooltip:text)
+
+[33mcommit e214fdd03c624f247e022748ffaffa8ed51ce855[m
+Author: mangosteenfruitlover <Diana.korepanowa@mail.ru>
+Date:   Thu Jun 10 02:12:05 2021 +0300
+
+    Updated content.json structure, filled with some content for test
+
+[33mcommit 521a904f9a7ef5d7a2358be7f87fee40417e9a65[m
+Author: mangosteenfruitlover <Diana.korepanowa@mail.ru>
+Date:   Thu Jun 10 02:11:32 2021 +0300
+
+    Updated fragment_card.xml
+
+[33mcommit c8ff0fffa0bfd511ca353c737fd6c075e6340a83[m
+Author: mangosteenfruitlover <Diana.korepanowa@mail.ru>
+Date:   Thu Jun 10 02:11:19 2021 +0300
+
+    Updated drawable: background card_image, button next_card (shape, icon)
+
+[33mcommit d58b1894173bd80e2de13b2828366cbfdf87c351[m
+Author: mangosteenfruitlover <Diana.korepanowa@mail.ru>
+Date:   Thu Jun 10 02:10:35 2021 +0300
+
+    Updated themes.xml
+
+[33mcommit 109643a1110924a4f6562c57d8a5363347959164[m
+Author: mangosteenfruitlover <Diana.korepanowa@mail.ru>
+Date:   Thu Jun 10 02:10:31 2021 +0300
+
+    Updated colors.xml
+
+[33mcommit fa91e7d4a5aa569f591742488415af4e706d5692[m
+Author: mangosteenfruitlover <Diana.korepanowa@mail.ru>
+Date:   Thu Jun 10 02:10:22 2021 +0300
+
+    Added toolbar layout
+
+[33mcommit a47c07fb12e999c04bd173484df7e28aaa4430bb[m
+Author: mangosteenfruitlover <Diana.korepanowa@mail.ru>
+Date:   Thu Jun 10 02:10:15 2021 +0300
+
+    Added fragment_card layout
+
+[33mcommit efa2041faf403cb13737316cc7d36bdeaac9cc32[m
+Author: mangosteenfruitlover <Diana.korepanowa@mail.ru>
+Date:   Thu Jun 10 02:09:55 2021 +0300
+
+    Added ForbiddenWord layout
+
+[33mcommit 84d2a2094e4d0ce7ce0cbf1db991584efec5ef3f[m
+Author: mangosteenfruitlover <Diana.korepanowa@mail.ru>
+Date:   Thu Jun 10 02:09:33 2021 +0300
+
+    Updated GameActivity layout
+
+[33mcommit 22e835647bf16e2cb203c561bf3b4f0aa42046ff[m
+Author: mangosteenfruitlover <Diana.korepanowa@mail.ru>
+Date:   Thu Jun 10 02:08:52 2021 +0300
+
+    Added resources-src folder in root for making images/icons
+
+[33mcommit 92622af1450a273ca6246a6773e61b5f8e6a9e19[m
+Author: mangosteenfruitlover <Diana.korepanowa@mail.ru>
+Date:   Thu Jun 10 02:07:02 2021 +0300
+
+    Updated build.gradle(ads, viewpager2)
+
+[33mcommit 18c8156c89c39c47a0bf2fa4b7c21679ee7aa5be[m
+Author: mangosteenfruitlover <Diana.korepanowa@mail.ru>
+Date:   Thu Jun 10 02:06:16 2021 +0300
+
+    Updated Game View+Controller
+
+[33mcommit 7a468e974fda3c48322096f7cf17dfecdb3981de[m
+Author: mangosteenfruitlover <Diana.korepanowa@mail.ru>
+Date:   Thu Jun 10 02:05:57 2021 +0300
+
+    Added some pagetransformers
+
+[33mcommit 603f807bc7155c9102cee1f40362489811980b28[m
+Author: mangosteenfruitlover <Diana.korepanowa@mail.ru>
+Date:   Thu Jun 10 02:05:35 2021 +0300
+
+    Added deck viewpager
+
+[33mcommit e23109db5fdfc7c9b76d9d795cb8a50bf9ea7d6a[m
+Author: mangosteenfruitlover <Diana.korepanowa@mail.ru>
+Date:   Thu Jun 10 02:04:24 2021 +0300
+
+    Added Card View+Controller
+
+[33mcommit 4ffb52f50cbd8cdbcb160bfaebc3e1196bf503e7[m
+Author: mangosteenfruitlover <Diana.korepanowa@mail.ru>
+Date:   Thu Jun 10 02:03:45 2021 +0300
+
+    Updated model (DataManager, Card(+image, +forbiddenWords), Deck, DeckDAO), added ForbiddenWord
+
+[33mcommit aad8e2f356cde6784c40b3367b820c9b1b8ad1f3[m
+Author: mangosteenfruitlover <Diana.korepanowa@mail.ru>
+Date:   Thu Jun 10 01:55:37 2021 +0300
+
+    Updated strings.xml with EN, RU, BE, KZ, UK localization
+
+[33mcommit de9e8264e47cc560034a90683085c64613100cb2[m
+Author: mangosteenfruitlover <Diana.korepanowa@mail.ru>
+Date:   Thu Jun 10 01:54:23 2021 +0300
+
+    Added assistant font
+
+[33mcommit 2e5aae1ba4d108af34c2b0dfd2013ae68cce1986[m
+Author: mangosteenfruitlover <Diana.korepanowa@mail.ru>
+Date:   Thu Jun 10 01:54:04 2021 +0300
+
+    Updated app icon
+
+[33mcommit f59352e08cd524551f50fe05d7b675041efb25ba[m
+Author: mangosteenfruitlover <Diana.korepanowa@mail.ru>
+Date:   Thu Jun 10 01:53:39 2021 +0300
+
+    Added ads support, set version and screenOrientation
+
+[33mcommit bf1083c9174209cc08aa93269ea7e49dab328bb4[m
+Author: Artemiy Prikupets <artemprikupets@gmail.com>
+Date:   Fri Jun 4 08:08:25 2021 +0300
+
+    Made default MVP classes for GameActivity, tested
+
+[33mcommit 68f4add91659148446d78eed30f56dffaedd495f[m
+Author: Artemiy Prikupets <artemprikupets@gmail.com>
+Date:   Fri Jun 4 08:07:42 2021 +0300
+
+    Made model: cards, dictionaries, loading it from JSON resource
+
+[33mcommit 66996f04134caac99ba65201bbdee052787a0d6f[m[33m ([m[1;31morigin/master[m[33m)[m
+Author: Artemiy Prikupets <artemprikupets@gmail.com>
+Date:   Wed Jun 2 02:55:20 2021 +0300
+
+    Added sample content storage JSON resource
+
+[33mcommit 3c0f6d7a4e04eedec256afc4633cb701eaba3759[m
+Author: Artemiy Prikupets <artemprikupets@gmail.com>
+Date:   Wed Jun 2 02:46:53 2021 +0300
+
+    Initial commit
