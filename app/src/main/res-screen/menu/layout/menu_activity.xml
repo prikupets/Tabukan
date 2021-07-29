@@ -195,7 +195,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@id/remove_ads_button_background"
         app:layout_constraintBottom_toTopOf="@id/ad_banner_background"
-        />
+        android:contentDescription="@string/menu_game_illustration" />
 
 
     <View
@@ -249,7 +249,7 @@
         android:layout_marginEnd="@dimen/_16sdp"
 
         app:layout_constraintStart_toEndOf="@id/remove_ads_button_background"
-        app:layout_constraintEnd_toStartOf="@id/rules_button_background"
+        app:layout_constraintEnd_toStartOf="@id/guide_button_background"
         app:layout_constraintTop_toTopOf="@id/remove_ads_button_background"
         app:layout_constraintBottom_toBottomOf="@id/remove_ads_button_background"
         app:layout_constraintDimensionRatio="H,1:1"
@@ -273,7 +273,7 @@
         />
 
     <View
-        android:id="@+id/rules_button_background"
+        android:id="@+id/guide_button_background"
         android:layout_width="0dp"
         android:layout_height="@dimen/_52sdp"
 
@@ -293,7 +293,7 @@
         />
 
     <View
-        android:id="@+id/rules_button_icon"
+        android:id="@+id/guide_button_icon"
         android:layout_width="0dp"
         android:layout_height="0dp"
 
@@ -301,10 +301,10 @@
 
         android:background="@drawable/rules_icon"
 
-        app:layout_constraintStart_toStartOf="@id/rules_button_background"
-        app:layout_constraintEnd_toEndOf="@id/rules_button_background"
-        app:layout_constraintTop_toTopOf="@id/rules_button_background"
-        app:layout_constraintBottom_toBottomOf="@id/rules_button_background"
+        app:layout_constraintStart_toStartOf="@id/guide_button_background"
+        app:layout_constraintEnd_toEndOf="@id/guide_button_background"
+        app:layout_constraintTop_toTopOf="@id/guide_button_background"
+        app:layout_constraintBottom_toBottomOf="@id/guide_button_background"
         app:layout_constraintDimensionRatio="H,1:1"
         />
 
@@ -318,7 +318,7 @@
 
         android:background="@drawable/rounded_shaded_honey_rectangle"
 
-        app:layout_constraintStart_toEndOf="@id/rules_button_background"
+        app:layout_constraintStart_toEndOf="@id/guide_button_background"
         app:layout_constraintEnd_toEndOf="@id/header_background"
         app:layout_constraintTop_toTopOf="@id/remove_ads_button_background"
         app:layout_constraintBottom_toBottomOf="@id/remove_ads_button_background"

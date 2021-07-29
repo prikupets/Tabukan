@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Random;
+import java.util.concurrent.TimeUnit;
 
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
 import io.reactivex.rxjava3.core.Completable;
@@ -37,8 +38,13 @@ public class SingleplayerPresenter extends BasePresenter<SingleplayerContract.Vi
         interactor.addDisposable(
                 interactor.isSingleplayerFirstLaunch()
                     .subscribeOn(Schedulers.io())
+                    .observeOn(AndroidSchedulers.mainThread())
+                        .map(result -> {
+                            if(result) showTempTooltips();
+                            return result;
+                        })
                     .observeOn(Schedulers.io())
-                        .flatMapCompletable((result) -> result ? interactor.setSingleplayerFirstLaunch(false) : Completable.complete())
+                        .flatMapCompletable(result -> result ? interactor.setSingleplayerFirstLaunch(false) : Completable.complete())
                     .observeOn(AndroidSchedulers.mainThread())
                         .subscribe(
                             () -> {},
@@ -181,6 +187,11 @@ public class SingleplayerPresenter extends BasePresenter<SingleplayerContract.Vi
     }
 
     @Override
+    public void onGuideClicked() {
+        showTempTooltips();
+    }
+
+    @Override
     public void onRemoveNeedlessSelectLettersClicked() {
         interactor.addDisposable(
                 interactor.getCurrentCard()
@@ -228,14 +239,17 @@ public class SingleplayerPresenter extends BasePresenter<SingleplayerContract.Vi
                             return nextAssociationIndexToShow;
                         }
                 )
-                .flatMap(nextAssociationIndexToShow ->
-                        interactor.setLastAssociationIndex(nextAssociationIndexToShow)
-                            .andThen(Single.just(nextAssociationIndexToShow))
-                )
                 .subscribeOn(Schedulers.io())
+                .observeOn(Schedulers.io())
+                    .flatMap(nextAssociationIndexToShow ->
+                            interactor.setLastAssociationIndex(nextAssociationIndexToShow)
+                                .andThen(Single.just(nextAssociationIndexToShow))
+                    )
                 .observeOn(AndroidSchedulers.mainThread())
-                    .subscribe(
-                            view::showAssociation,
+                    .subscribe(nextAssociationIndexToShow -> {
+                               view.showAssociation(nextAssociationIndexToShow);
+                               if(nextAssociationIndexToShow + 1 > SingleplayerContract.ASSOCIATION_INDEX_TO_HIDE_TOOLTIPS) view.hideTooltips();
+                            },
                         (throwable) -> {
                             if(throwable instanceof AlreadyShownAllAssociationsException)
                                 Log.d(TAG, "didn't finish onNextAssociationClicked: already shown all associations");
@@ -364,5 +378,14 @@ public class SingleplayerPresenter extends BasePresenter<SingleplayerContract.Vi
         }
 
         return true;
+    }
+
+    private void showTempTooltips() {
+        view.showTooltips();
+        interactor.addDisposable(Completable.complete()
+                .delay(SingleplayerContract.TEMP_TOOLTIPS_DURATION, TimeUnit.SECONDS)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(() -> view.hideTooltips()));
     }
 }

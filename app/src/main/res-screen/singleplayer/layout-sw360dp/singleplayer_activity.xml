@@ -1,8 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/singleplayer_root"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -100,7 +98,7 @@
 
         android:background="@drawable/rounded_shaded_honey_rectangle"
 
-        app:layout_constraintEnd_toStartOf="@id/rules_button_background"
+        app:layout_constraintEnd_toStartOf="@id/guide_button_background"
         app:layout_constraintStart_toEndOf="@id/coins_button_background"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -142,7 +140,7 @@
 
 
     <View
-        android:id="@+id/rules_button_background"
+        android:id="@+id/guide_button_background"
         android:layout_width="@dimen/_38sdp"
         android:layout_height="@dimen/_38sdp"
 
@@ -155,7 +153,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <View
-        android:id="@+id/rules_button_icon"
+        android:id="@+id/guide_button_icon"
         android:layout_width="@dimen/_20sdp"
         android:layout_height="@dimen/_20sdp"
 
@@ -163,11 +161,11 @@
 
         android:layout_marginBottom="@dimen/_3sdp"
 
-        app:layout_constraintBottom_toBottomOf="@+id/rules_button_background"
-        app:layout_constraintEnd_toEndOf="@id/rules_button_background"
-        app:layout_constraintStart_toStartOf="@id/rules_button_background"
+        app:layout_constraintBottom_toBottomOf="@+id/guide_button_background"
+        app:layout_constraintEnd_toEndOf="@id/guide_button_background"
+        app:layout_constraintStart_toStartOf="@id/guide_button_background"
 
-        app:layout_constraintTop_toTopOf="@+id/rules_button_background" />
+        app:layout_constraintTop_toTopOf="@+id/guide_button_background" />
 
 
     <androidx.constraintlayout.widget.Group
@@ -194,7 +192,6 @@
                 association_text4,
                 association_text5"
         />
-
 
     <TextView
         android:id="@+id/association_text1"
@@ -242,6 +239,44 @@
         app:layout_constraintStart_toStartOf="@id/associations"
         app:layout_constraintEnd_toEndOf="@id/associations"
         app:layout_constraintTop_toBottomOf="@id/association_text4"
+        />
+
+    <TextView
+        android:id="@+id/tooltip_associations"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+
+        android:visibility="invisible"
+
+        android:background="@color/yellow5"
+
+        android:text="@string/tooltip_associations"
+        android:textAlignment="center"
+        android:textSize="@dimen/_12sdp"
+
+        app:layout_constraintStart_toStartOf="@id/associations"
+        app:layout_constraintEnd_toEndOf="@id/associations"
+        app:layout_constraintTop_toTopOf="@id/association_text3"
+        app:layout_constraintBottom_toBottomOf="@id/association_text3"
+        />
+
+    <TextView
+        android:id="@+id/tooltip_hints"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+
+        android:visibility="invisible"
+
+        android:background="@color/yellow5"
+
+        android:text="@string/tooltip_hints"
+        android:textAlignment="center"
+        android:textSize="@dimen/_12sdp"
+
+        app:layout_constraintStart_toStartOf="@id/associations"
+        app:layout_constraintEnd_toEndOf="@id/associations"
+        app:layout_constraintTop_toTopOf="@id/association_text5"
+        app:layout_constraintBottom_toBottomOf="@id/association_text5"
         />
 
     <Space
@@ -391,6 +426,24 @@
             word_letter13"
         />
 
+    <TextView
+        android:id="@+id/tooltip_word_letters"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+
+        android:visibility="invisible"
+
+        android:background="@color/yellow5"
+
+        android:text="@string/tooltip_word_letters"
+        android:textAlignment="center"
+        android:textSize="@dimen/_12sdp"
+
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@id/word_letters_flow"
+        />
+
     <include
         android:id="@+id/word_letter1"
         layout="@layout/singleplayer_word_letter" />
@@ -487,6 +540,24 @@
             select_letter14,
             select_letter15,
             select_letter16"
+        />
+
+    <TextView
+        android:id="@+id/tooltip_select_letters"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+
+        android:visibility="invisible"
+
+        android:background="@color/yellow5"
+
+        android:text="@string/tooltip_select_letters"
+        android:textAlignment="center"
+        android:textSize="@dimen/_11sdp"
+
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/word_letters_flow"
         />
 
     <include

@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="tooltip_associations">These are associations-hints</string>
+    <string name="tooltip_hints">Here are hints for coins ↓</string>
+    <string name="tooltip_word_letters">Guess the word</string>
+    <string name="tooltip_select_letters">Use these letters</string>
+    <string name="menu_game_illustration">Menu game illustration</string>
+</resources>

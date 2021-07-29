@@ -1,11 +1,8 @@
 package ru.granby.tabukan.ui.singleplayer;
 
-import android.animation.Animator;
-import android.animation.AnimatorListenerAdapter;
 import android.graphics.drawable.TransitionDrawable;
 import android.os.Bundle;
 import android.os.Handler;
-import android.transition.Transition;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationSet;
@@ -13,7 +10,6 @@ import android.view.animation.AnimationUtils;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.dynamicanimation.animation.DynamicAnimation;
 
 import com.google.android.gms.ads.AdRequest;
 
@@ -199,13 +195,30 @@ public class SingleplayerActivity extends AppCompatActivity implements Singlepla
         }
     }
 
+    @Override
+    public void hideTooltips() {
+        binding.tooltipAssociations.setVisibility(View.INVISIBLE);
+        binding.tooltipHints.setVisibility(View.INVISIBLE);
+        binding.tooltipSelectLetters.setVisibility(View.INVISIBLE);
+        binding.tooltipWordLetters.setVisibility(View.INVISIBLE);
+    }
+
+    @Override
+    public void showTooltips() {
+        binding.tooltipAssociations.setVisibility(View.VISIBLE);
+        binding.tooltipHints.setVisibility(View.VISIBLE);
+        binding.tooltipSelectLetters.setVisibility(View.VISIBLE);
+        binding.tooltipWordLetters.setVisibility(View.VISIBLE);
+    }
+
     private void setUpViews() {
         initAds();
 
-        binding.backButtonBackground.setOnClickListener((v) -> presenter.onBackClicked());
-        binding.removeNeedlessSelectLettersButtonBackground.setOnClickListener((v) -> presenter.onRemoveNeedlessSelectLettersClicked());
-        binding.nextAssociationButtonBackground.setOnClickListener((v) -> presenter.onNextAssociationClicked());
-        binding.skipCardButtonBackground.setOnClickListener((v) -> presenter.onSkipCardClicked());
+        binding.backButtonBackground.setOnClickListener(v -> presenter.onBackClicked());
+        binding.removeNeedlessSelectLettersButtonBackground.setOnClickListener(v -> presenter.onRemoveNeedlessSelectLettersClicked());
+        binding.nextAssociationButtonBackground.setOnClickListener(v -> presenter.onNextAssociationClicked());
+        binding.skipCardButtonBackground.setOnClickListener(v -> presenter.onSkipCardClicked());
+        binding.guideButtonBackground.setOnClickListener(v -> presenter.onGuideClicked());
         setWordLettersOnClickListeners();
         setSelectLettersOnClickListeners();
 
@@ -222,9 +235,8 @@ public class SingleplayerActivity extends AppCompatActivity implements Singlepla
         for (int i = 0; i < wordLettersReferencedIds.length; i++) {
             int finalIndex = i;
 
-            findViewById(wordLettersReferencedIds[i]).setOnClickListener((v) -> {
-                presenter.onWordLetterClicked(finalIndex, String.valueOf(((TextView) v).getText()));
-            });
+            findViewById(wordLettersReferencedIds[i]).setOnClickListener((v) ->
+                    presenter.onWordLetterClicked(finalIndex, String.valueOf(((TextView) v).getText())));
         }
     }
 
@@ -233,9 +245,8 @@ public class SingleplayerActivity extends AppCompatActivity implements Singlepla
         for (int i = 0; i < selectLettersReferencedIds.length; i++) {
             int finalIndex = i;
 
-            findViewById(selectLettersReferencedIds[i]).setOnClickListener((v) -> {
-                presenter.onSelectLetterClicked(finalIndex, String.valueOf(((TextView) v).getText()));
-            });
+            findViewById(selectLettersReferencedIds[i]).setOnClickListener((v) ->
+                    presenter.onSelectLetterClicked(finalIndex, String.valueOf(((TextView) v).getText())));
         }
     }
 }

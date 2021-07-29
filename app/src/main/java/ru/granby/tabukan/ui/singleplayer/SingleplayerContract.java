@@ -14,6 +14,9 @@ public interface SingleplayerContract {
     Character BLANK_LETTER = ' ';
     int SELECT_LETTERS_COUNT = 16;
     int SKIP_CARD_PRICE = 5;
+    int CARD_INDEX_TO_HIDE_TOOLTIPS = 2;
+    int ASSOCIATION_INDEX_TO_HIDE_TOOLTIPS = 2;
+    int TEMP_TOOLTIPS_DURATION = 7; // seconds
 
     interface View extends BaseContract.View {
         void showAdBanner(AdRequest adRequest);
@@ -30,6 +33,8 @@ public interface SingleplayerContract {
         void showWordIsIncorrect();
         void showNotEnoughBalance();
         void showNoMoreLevelsDialog();
+        void hideTooltips();
+        void showTooltips();
     }
 
     interface Presenter extends BaseContract.Presenter<View, Interactor> {
@@ -42,6 +47,7 @@ public interface SingleplayerContract {
         void showCurrentCard();
         void onWordLetterClicked(int viewIndex, String viewText);
         void onSelectLetterClicked(int viewIndex, String viewText);
+        void onGuideClicked();
     }
 
     interface Interactor extends BaseContract.Interactor {
