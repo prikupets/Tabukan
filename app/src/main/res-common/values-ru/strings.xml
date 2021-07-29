@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Табукан</string>
+    <string name="next_card">Следующее</string>
+    <string name="title_tooltip">объясни это слово</string>
+    <string name="forbidden_words_tooltip">не используя этих:</string>
+    <string name="play_multiplayer">Играть компанией</string>
+    <string name="play_singleplayer">Играть одному</string>
+    <string name="settings">Настройки</string>
+    <string name="rules">Правила игры</string>
+    <string name="store">Магазин</string>
+    <string name="remove_ads">Убрать рекламу</string>
+    <string name="skip_button">Пропустить за 5</string>
+    <string name="next_hint_button">Следующая подсказка</string>
+    <string name="ok">Окей</string>
+    <string name="current_level">Уровень</string>
+    <string name="not_enough_balance">Недостаточно монет</string>
+    <string name="no_more_levels_in_singleplayer">На данный момент уровней больше нет. Попробуйте мультиплеер!</string>
+</resources>

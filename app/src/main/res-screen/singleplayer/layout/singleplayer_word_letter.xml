@@ -1,0 +1,33 @@
+<TextView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/word_letter"
+    android:tag="word_letter_text"
+    android:layout_width="0dp"
+    android:layout_height="0dp"
+
+    android:visibility="gone"
+    android:background="@drawable/singleplayer_word_letter_neutral_to_incorrect"
+
+    android:clickable="true"
+    android:focusable="true"
+
+    android:gravity="center"
+    android:paddingHorizontal="@dimen/_8sdp"
+    android:paddingVertical="@dimen/_3sdp"
+
+    android:fontFamily="@font/assistant_regular"
+    android:textAlignment="center"
+    android:textColor="@color/white5"
+    android:textSize="@dimen/_18ssp"
+    android:text=" "
+    android:textAllCaps="true"
+
+    app:layout_constraintDimensionRatio="H,1:1"
+    android:layout_marginBottom="@dimen/_3sdp"
+
+    app:layout_constraintStart_toStartOf="parent"
+    app:layout_constraintEnd_toEndOf="parent"
+    app:layout_constraintTop_toTopOf="parent"
+    app:layout_constraintBottom_toBottomOf="parent"
+/>

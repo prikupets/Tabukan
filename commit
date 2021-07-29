@@ -98,7 +98,7 @@ Date:   Thu Jun 10 02:04:24 2021 +0300
 Author: mangosteenfruitlover <Diana.korepanowa@mail.ru>
 Date:   Thu Jun 10 02:03:45 2021 +0300
 
-    Updated model (DataManager, Card(+image, +forbiddenWords), Deck, DeckDAO), added ForbiddenWord
+    Updated model (DataManager, Card(+image, +tabus), Deck, DeckDAO), added ForbiddenWord
 
 [33mcommit aad8e2f356cde6784c40b3367b820c9b1b8ad1f3[m
 Author: mangosteenfruitlover <Diana.korepanowa@mail.ru>

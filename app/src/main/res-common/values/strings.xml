@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8" ?>
+
+<resources>
+    <!--UI-->
+    <string name="app_name">Tabukan</string>
+    <string name="next_card">Next</string>
+    <string name="title_tooltip">explain this word</string>
+    <string name="forbidden_words_tooltip">without using these:</string>
+    <string name="play_multiplayer">Play with friends</string>
+    <string name="play_singleplayer">Play singleplayer</string>
+    <string name="settings">Settings</string>
+    <string name="rules">How to play</string>
+    <string name="store">Store</string>
+    <string name="remove_ads">Remove ads</string>
+    <string name="skip_button">Skip for 5</string>
+    <string name="next_hint_button">Next hint</string>
+    <string name="ok">OK</string>
+    <string name="current_level">Level</string>
+    <string name="not_enough_balance">Not enough balance</string>
+    <string name="no_more_levels_in_singleplayer">No more levels at the moment. Try multiplayer!</string>
+</resources>

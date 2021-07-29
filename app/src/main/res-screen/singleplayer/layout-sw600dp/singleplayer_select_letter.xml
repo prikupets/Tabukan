@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<TextView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+
+    android:id="@+id/select_letter"
+    android:tag="select_letter_text"
+    android:layout_width="0dp"
+    android:layout_height="0dp"
+
+    android:visibility="invisible"
+    android:background="@drawable/singleplayer_select_letter_rectangle"
+
+    android:clickable="true"
+    android:focusable="true"
+
+    android:gravity="center"
+    android:paddingBottom="@dimen/_3sdp"
+
+    android:fontFamily="@font/assistant_regular"
+    android:textAlignment="center"
+    android:textSize="@dimen/_18ssp"
+    android:text=" "
+    android:textAllCaps="true"
+
+    app:layout_constraintDimensionRatio="H,1:1"
+
+    app:layout_constraintStart_toStartOf="parent"
+    app:layout_constraintEnd_toEndOf="parent"
+    app:layout_constraintTop_toTopOf="parent"
+    app:layout_constraintBottom_toBottomOf="parent"
+    />

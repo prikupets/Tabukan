@@ -1,24 +1,38 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="ru.granlovestea.forbiddenwords">
-
+    package="ru.granby.tabukan">
+    <uses-permission android:name="android.permission.INTERNET" />
+    <!--TODO: fix roundIcon-->
     <application
         android:versionCode="1"
         android:versionName="1.0"
-        android:icon="@mipmap/ic_launcher"
-        android:name=".App"
+        android:icon="@drawable/ic_launcher"
+        android:name="ru.granby.tabukan.App"
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/Theme.ForbiddenWords">
-        <activity android:name=".ui.game.GameActivity"
-            android:screenOrientation="portrait">
+        android:theme="@style/Theme.Tabukan">
+        <activity
+            android:name="ru.granby.tabukan.ui.splash.SplashActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/SplashTheme">
             <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
 
+                <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+        <activity android:name="ru.granby.tabukan.ui.menu.MenuActivity"
+            android:screenOrientation="portrait">
+        </activity>
+
+        <activity android:name=".ui.multiplayer.MultiplayerActivity"
+            android:screenOrientation="portrait"/>
+
+        <activity android:name=".ui.singleplayer.SingleplayerActivity"
+            android:screenOrientation="portrait" />
+
         <meta-data
             android:name="com.google.android.gms.ads.APPLICATION_ID"
             android:value="ca-app-pub-8898642862948300~9417440738"/>

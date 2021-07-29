@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="320dp"
+    android:layout_height="wrap_content"
+
+    android:layout_centerInParent="true">
+
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/header"
+        android:background="@drawable/dialog_header">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/header_text"
+
+            android:padding="6dp"
+            android:textAlignment="center"
+            android:fontFamily="@font/assistant_regular"
+            android:textSize="28sp"
+            android:text="Как играть?"/>
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/content_container"
+
+        android:layout_below="@+id/header"
+        android:background="@color/yellow3">
+
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/content_text"
+
+            android:padding="6dp"
+            android:textColor="@color/blackA25"
+            android:textAlignment="center"
+            android:fontFamily="@font/assistant_regular"
+            android:textSize="24sp"
+            android:text="Объясни слово с карточки друзьям не используя запретных"
+            android:textAllCaps="false"/>
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/ok_button"
+
+        android:layout_below="@id/content_container"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentEnd="true"
+        android:background="@drawable/dialog_ok_button"
+        android:paddingBottom="6dp"
+        android:clickable="true"
+        android:focusable="true">
+
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+
+                android:layout_alignParentStart="true"
+                android:layout_alignParentEnd="true"
+                android:layout_centerVertical="true"
+                android:fontFamily="@font/roboto_medium"
+                android:padding="12dp"
+                android:text="@string/ok"
+                android:textAlignment="center"
+                android:textAllCaps="false"
+                android:textSize="20sp" />
+
+            <ImageView
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+
+                android:layout_alignParentEnd="true"
+                android:layout_centerVertical="true"
+                android:layout_marginEnd="24dp"
+
+                android:src="@drawable/tick_icon" />
+        </RelativeLayout>
+    </RelativeLayout>
+</RelativeLayout>

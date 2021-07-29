@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+<!--    TODO: replace replace blinding white text color with normal-->
+    <color name="white">#FFFFFF</color>
+    <color name="white5">#F2F2F2</color>
+    <color name="white10">#E6E6E6</color>
+    <color name="white30">#B3B3B3</color>
+    <color name="white50">#808080</color>
+    <color name="white72">#474747</color>
+
+    <color name="yellow3">#F7D08A</color>
+    <color name="yellow5">#F1CB6F</color>
+    <color name="yellow8">#EBC66C</color>
+    <color name="yellow13">#DEBD64</color>>
+    <color name="yellow24">#C3A55B</color>
+
+    <color name="honey9">#E8BA61</color>
+    <color name="honey17">#D49F35</color>
+
+    <color name="orange_honey5">#F2800D</color>
+
+    <color name="red_honey66">#702F00</color>
+    <color name="brown_honey66">#705038</color>
+
+    <color name="orange4">#F4A261</color>
+    <color name="orange10">#E6995E</color>
+    <color name="orange12">#E09356</color>
+
+    <color name="red1">#FC7958</color>
+    <color name="red9">#E76F51</color>
+    <color name="red13">#DE6F4E</color>
+
+    <color name="green30">#4DB350</color>
+    <color name="green40">#429945</color>
+    <color name="green60">#2C662E</color>
+
+    <color name="teal30">#2A9D8F</color>
+    <color name="teal40">#80264653</color>
+    <color name="teal60">#264653</color>
+    <color name="teal80">#1E3742</color>
+
+    <color name="pink30">#F8AC8B</color>
+    <color name="pink60">#E8A283</color>
+
+    <color name="brown50">#A98576</color>
+
+    <color name="grey40">#595D56</color>
+
+    <color name="black">#FF000000</color>
+    <color name="blackA25">#BF000000</color>
+    <color name="black_a50">#80000000</color>
+    <color name="black_a75">#40000000</color>
+    <color name="black_a94">#0F000000</color>
+
+</resources>

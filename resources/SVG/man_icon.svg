@@ -1,0 +1,11 @@
+<svg id="Слой_1" data-name="Слой 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+  <defs>
+    <style>
+      .cls-1 {
+        fill: #fff;
+      }
+    </style>
+  </defs>
+  <title>man_icon</title>
+  <path class="cls-1" d="M256,256a98.5,98.5,0,1,0-98.5-98.5A98.47,98.47,0,0,0,256,256Zm0,49.25c-65.75,0-197,33-197,98.5V453H453V403.75C453,338.25,321.75,305.25,256,305.25Z"/>
+</svg>
