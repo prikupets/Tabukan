@@ -1,8 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<resources>
-    <string name="tooltip_associations">Это ассоциации-подсказки</string>
-    <string name="tooltip_hints">Здесь подсказки за монетки ↓</string>
-    <string name="tooltip_word_letters">Угадай слово</string>
-    <string name="tooltip_select_letters">Используй эти буквы</string>
-    <string name="menu_game_illustration">Иллюстрация игры в меню</string>
-</resources>

@@ -18,4 +18,9 @@
     <string name="current_level">Level</string>
     <string name="not_enough_balance">Not enough balance</string>
     <string name="no_more_levels_in_singleplayer">No more levels at the moment. Try multiplayer!</string>
+    <string name="tooltip_associations">These are associations-hints</string>
+    <string name="tooltip_hints">Here are hints for coins ↓</string>
+    <string name="tooltip_word_letters">Guess the word</string>
+    <string name="tooltip_select_letters">Use these letters</string>
+    <string name="menu_game_illustration">Menu game illustration</string>
 </resources>

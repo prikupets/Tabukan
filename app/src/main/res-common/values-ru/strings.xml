@@ -16,4 +16,9 @@
     <string name="current_level">Уровень</string>
     <string name="not_enough_balance">Недостаточно монет</string>
     <string name="no_more_levels_in_singleplayer">На данный момент уровней больше нет. Попробуйте мультиплеер!</string>
+    <string name="tooltip_associations">Это ассоциации-подсказки</string>
+    <string name="tooltip_hints">Здесь подсказки за монетки ↓</string>
+    <string name="tooltip_word_letters">Угадай слово</string>
+    <string name="tooltip_select_letters">Используй эти буквы</string>
+    <string name="menu_game_illustration">Иллюстрация игры в меню</string>
 </resources>
