@@ -44,9 +44,9 @@ public class SingleplayerInteractor extends BaseInteractor implements Singleplay
 
     @Synchronized
     @Override
-    public Completable setSingleplayerFirstLaunch(boolean isFirstLaunch) {
-        return set(FIRST_LAUNCH, isFirstLaunch, SharedPreferencesManager.getInstance()
-                .putBoolean(FIRST_LAUNCH, isFirstLaunch));
+    public Completable setSingleplayerFirstLaunch(boolean state) {
+        return set(FIRST_LAUNCH, state, SharedPreferencesManager.getInstance()
+                .putBoolean(FIRST_LAUNCH, state));
     }
 
     @Synchronized
@@ -148,5 +148,10 @@ public class SingleplayerInteractor extends BaseInteractor implements Singleplay
     public Completable setCurrentSelectLetters(List<Character> selectLetters) {
         return set(CURRENT_SELECT_LETTERS, selectLetters, SharedPreferencesManager.getInstance()
                 .putObject(CURRENT_SELECT_LETTERS, selectLetters));
+    }
+
+    @Override
+    public Single<Boolean> isAdsRemoved() {
+        return App.getInstance().getInteractor().isAdsRemoved();
     }
 }

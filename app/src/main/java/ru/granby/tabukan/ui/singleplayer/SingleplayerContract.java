@@ -20,6 +20,7 @@ public interface SingleplayerContract {
 
     interface View extends BaseContract.View {
         void showAdBanner(AdRequest adRequest);
+        void hideAds();
         void showCoinBalance(int coinBalance);
         void showCurrentLevel(int level);
         void showAssociation(int nextAssociationIndexToShow);
@@ -52,8 +53,9 @@ public interface SingleplayerContract {
 
     interface Interactor extends BaseContract.Interactor {
         Single<AdRequest> getAdRequest();
+        Single<Boolean> isAdsRemoved();
         Single<Boolean> isSingleplayerFirstLaunch();
-        Completable setSingleplayerFirstLaunch(boolean isFirstLaunch);
+        Completable setSingleplayerFirstLaunch(boolean state);
         Single<Integer> getCoinBalance();
         Completable setCoinBalance(int coinBalance);
         Single<Integer> getCardsCount();

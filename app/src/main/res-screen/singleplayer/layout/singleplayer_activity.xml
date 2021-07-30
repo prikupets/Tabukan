@@ -379,7 +379,7 @@
         android:layout_height="1dp"
 
         app:layout_constraintTop_toBottomOf="@id/next_association_button_background"
-        app:layout_constraintBottom_toTopOf="@id/ad_banner"
+        app:layout_constraintBottom_toTopOf="@id/ad_banner_background"
         />
 
     <androidx.constraintlayout.helper.widget.Flow
@@ -511,7 +511,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@id/letters_flow_center"
-        app:layout_constraintBottom_toTopOf="@id/ad_banner"
+        app:layout_constraintBottom_toTopOf="@id/ad_banner_background"
 
         app:flow_maxElementsWrap="8"
         app:flow_horizontalGap="@dimen/_4sdp"
@@ -622,6 +622,17 @@
         android:id="@+id/select_letter16"
         layout="@layout/singleplayer_select_letter" />
 
+    <View
+        android:id="@+id/ad_banner_background"
+        android:layout_width="0dp"
+        android:layout_height="50dp"
+
+        android:background="@android:color/transparent"
+
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        />
 
     <com.google.android.gms.ads.AdView
         android:id="@+id/ad_banner"

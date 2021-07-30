@@ -40,14 +40,24 @@ public class MenuInteractor extends BaseInteractor implements MenuContract.Inter
 
     @Synchronized
     @Override
-    public Completable setMenuFirstLaunch(boolean isFirstLaunch) {
-        return set(FIRST_LAUNCH, isFirstLaunch, SharedPreferencesManager.getInstance()
-                .putBoolean(FIRST_LAUNCH, isFirstLaunch));
+    public Completable setMenuFirstLaunch(boolean state) {
+        return set(FIRST_LAUNCH, state, SharedPreferencesManager.getInstance()
+                .putBoolean(FIRST_LAUNCH, state));
     }
 
     @Synchronized
     @Override
     public Completable setDefaultCoinBalance() {
         return App.getInstance().getInteractor().setDefaultCoinBalance();
+    }
+
+    @Override
+    public Single<Boolean> isAdsRemoved() {
+        return App.getInstance().getInteractor().isAdsRemoved();
+    }
+
+    @Override
+    public Completable setAdsRemoved(boolean state) {
+        return App.getInstance().getInteractor().setAdsRemoved(state);
     }
 }

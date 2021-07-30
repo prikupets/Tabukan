@@ -21,4 +21,7 @@
     <string name="tooltip_word_letters">Угадай слово</string>
     <string name="tooltip_select_letters">Используй эти буквы</string>
     <string name="menu_game_illustration">Иллюстрация игры в меню</string>
+    <string name="ads_already_removed">Реклама уже удалена</string>
+    <string name="thanks_for_the_purchase">Благодарим за покупку!</string>
+    <string name="payment_error">Произошла ошибка при оплате</string>
 </resources>

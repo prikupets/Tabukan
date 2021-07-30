@@ -12,6 +12,7 @@ import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
 import io.reactivex.rxjava3.core.Completable;
 import io.reactivex.rxjava3.core.Single;
 import io.reactivex.rxjava3.schedulers.Schedulers;
+import ru.granby.tabukan.exception.AdsRemovedException;
 import ru.granby.tabukan.exception.AlreadyShownAllAssociationsException;
 import ru.granby.tabukan.exception.IncorrectCardIndexException;
 import ru.granby.tabukan.exception.NotEnoughBalanceException;
@@ -56,12 +57,25 @@ public class SingleplayerPresenter extends BasePresenter<SingleplayerContract.Vi
     @Override
     public void initAds() {
         interactor.addDisposable(
-                interactor.getAdRequest()
-                    .subscribeOn(Schedulers.io())
-                    .observeOn(AndroidSchedulers.mainThread())
+                interactor.isAdsRemoved()
+                        .subscribeOn(Schedulers.io())
+                        .observeOn(AndroidSchedulers.mainThread())
+                        .flatMap(adsRemoved -> {
+                            if(adsRemoved) {
+                                view.hideAds();
+                                throw new AdsRemovedException("Ads removed, can't hide it");
+                            }
+                            return Single.just(adsRemoved);
+                        })
+                        .observeOn(Schedulers.io())
+                        .flatMap(ignored -> interactor.getAdRequest())
+                        .observeOn(AndroidSchedulers.mainThread())
                         .subscribe(
-                            view::showAdBanner,
-                            (throwable -> Log.e(TAG, "can't getAdRequest: ", throwable))
+                                view::showAdBanner,
+                                throwable -> {
+                                    if(!(throwable instanceof AdsRemovedException))
+                                        Log.e(TAG, "can't initAds: ", throwable);
+                                }
                         )
         );
     }

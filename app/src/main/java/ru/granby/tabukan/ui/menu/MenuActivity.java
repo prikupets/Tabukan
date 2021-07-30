@@ -1,17 +1,21 @@
 package ru.granby.tabukan.ui.menu;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.android.gms.ads.AdRequest;
 
+import ru.granby.tabukan.R;
 import ru.granby.tabukan.databinding.MenuActivityBinding;
 import ru.granby.tabukan.model.business.interactor.MenuInteractor;
 import ru.granby.tabukan.ui.multiplayer.MultiplayerActivity;
 import ru.granby.tabukan.ui.singleplayer.SingleplayerActivity;
+import ru.granby.tabukan.utils.Toaster;
 
 
 public class MenuActivity extends AppCompatActivity implements MenuContract.View {
@@ -59,18 +63,8 @@ public class MenuActivity extends AppCompatActivity implements MenuContract.View
     }
 
     @Override
-    public void setOnPlayMultiplayerClickedListener() {
-        binding.playMultiplayerButtonBackground.setOnClickListener((v) -> presenter.onPlayMultiplayerClicked());
-    }
-
-    @Override
     public void startMultiplayerActivity() {
         startActivity(new Intent(this, MultiplayerActivity.class));
-    }
-
-    @Override
-    public void setOnPlaySingleplayerClickedListener() {
-        binding.playSingleplayerButtonBackground.setOnClickListener((v) -> presenter.onPlaySingleplayerClicked());
     }
 
     @Override
@@ -78,9 +72,42 @@ public class MenuActivity extends AppCompatActivity implements MenuContract.View
         startActivity(new Intent(this, SingleplayerActivity.class));
     }
 
+    @Override
+    public void showAdsAlreadyRemoved() {
+        Toaster.showLongToast(this, getResources().getString(R.string.ads_already_removed));
+    }
+
+    @Override
+    public void showBuyRemoveAdsDialog() {
+        // TODO: make actual buy ads dialog using google play
+
+        new AlertDialog.Builder(this)
+                .setPositiveButton("Buy", (dialog, id) -> presenter.onRemoveAdsBought())
+                .setNeutralButton("Fake error", (dialog, id) -> presenter.onRemoveAdsPaymentError())
+                .setNegativeButton("Cancel", (dialog, id) -> dialog.dismiss())
+                .create()
+                .show();
+    }
+
+    @Override
+    public void showRemoveAdsBought() {
+        Toaster.showShortToast(this, getResources().getString(R.string.thanks_for_the_purchase));
+    }
+
+    @Override
+    public void showRemoveAdsPaymentError() {
+        Toaster.showLongToast(this, getResources().getString(R.string.payment_error));
+    }
+
+    @Override
+    public void hideAds() {
+        binding.menuRoot.removeView(binding.adBanner);
+    }
+
     private void setUpViews() {
         presenter.initAds();
-        setOnPlayMultiplayerClickedListener();
-        setOnPlaySingleplayerClickedListener();
+        binding.playMultiplayerButtonBackground.setOnClickListener(v -> presenter.onPlayMultiplayerClicked());
+        binding.playSingleplayerButtonBackground.setOnClickListener(v -> presenter.onPlaySingleplayerClicked());
+        binding.removeAdsButtonBackground.setOnClickListener(v -> presenter.onRemoveAdsClicked());
     }
 }

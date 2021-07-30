@@ -23,4 +23,7 @@
     <string name="tooltip_word_letters">Guess the word</string>
     <string name="tooltip_select_letters">Use these letters</string>
     <string name="menu_game_illustration">Menu game illustration</string>
+    <string name="ads_already_removed">You already removed ads</string>
+    <string name="thanks_for_the_purchase">Thanks for the purchase!</string>
+    <string name="payment_error">There was an error during payment</string>
 </resources>

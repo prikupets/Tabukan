@@ -66,6 +66,11 @@ public class SingleplayerActivity extends AppCompatActivity implements Singlepla
     }
 
     @Override
+    public void hideAds() {
+        binding.singleplayerRoot.removeView(binding.adBanner);
+    }
+
+    @Override
     public void finishView() {
         super.finish();
     }
