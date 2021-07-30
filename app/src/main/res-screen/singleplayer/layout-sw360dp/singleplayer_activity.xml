@@ -501,6 +501,17 @@
         android:id="@+id/word_letter13"
         layout="@layout/singleplayer_word_letter" />
 
+    <nl.dionsegijn.konfetti.KonfettiView
+        android:id="@+id/victory_confetti"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+
+        app:layout_constraintStart_toStartOf="@id/word_letters_flow"
+        app:layout_constraintEnd_toEndOf="@id/word_letters_flow"
+        app:layout_constraintTop_toTopOf="@id/word_letters_flow"
+        app:layout_constraintBottom_toBottomOf="@id/word_letters_flow"
+        />
+
     <androidx.constraintlayout.helper.widget.Flow
         android:id="@+id/select_letters_flow"
         android:layout_width="match_parent"
