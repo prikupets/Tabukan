@@ -37,8 +37,7 @@
         android:layout_width="0dp"
         android:layout_height="0dp"
 
-        app:cardElevation="6dp"
-        app:cardCornerRadius="8dp"
+        app:cardCornerRadius="@dimen/_8sdp"
 
         android:layout_marginHorizontal="@dimen/_10sdp"
         android:layout_marginVertical="@dimen/_10sdp"
