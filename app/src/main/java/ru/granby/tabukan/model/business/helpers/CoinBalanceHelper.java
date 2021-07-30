@@ -1,5 +1,6 @@
 package ru.granby.tabukan.model.business.helpers;
 
+import io.reactivex.rxjava3.core.SingleSource;
 import ru.granby.tabukan.exception.IncorrectCardIndexException;
 import ru.granby.tabukan.exception.NotEnoughBalanceException;
 
@@ -12,5 +13,10 @@ public class CoinBalanceHelper {
         }
 
         return balance;
+    }
+
+
+    public static int deposit(int coinBalance, int levelReward) {
+        return coinBalance + levelReward;
     }
 }

@@ -4,11 +4,11 @@
         <layer-list>
             <item>
                 <shape>
-                    <solid android:color="@color/green40"/>
+                    <solid android:color="@color/green28"/>
                     <corners android:radius="@dimen/_6sdp"/>
                     <stroke
                         android:width="@dimen/_4sdp"
-                        android:color="@color/green30"/>
+                        android:color="@color/green24"/>
                 </shape>
             </item>
         </layer-list>

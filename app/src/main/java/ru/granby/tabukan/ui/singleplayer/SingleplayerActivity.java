@@ -10,17 +10,17 @@ import android.view.animation.AnimationUtils;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.content.res.AppCompatResources;
 
 import com.google.android.gms.ads.AdRequest;
 
 import java.util.List;
 
-import ru.granby.tabukan.App;
 import ru.granby.tabukan.R;
 import ru.granby.tabukan.databinding.SingleplayerActivityBinding;
 import ru.granby.tabukan.localization.Localization;
-import ru.granby.tabukan.model.data.database.relations.game.Association;
 import ru.granby.tabukan.model.business.interactor.SingleplayerInteractor;
+import ru.granby.tabukan.model.data.database.relations.game.Association;
 import ru.granby.tabukan.utils.Toaster;
 
 import static ru.granby.tabukan.ui.singleplayer.SingleplayerContract.BLANK_LETTER;
@@ -106,7 +106,8 @@ public class SingleplayerActivity extends AppCompatActivity implements Singlepla
     @Override
     public void showBlankWordLetters() {
         for (int wordLetterTextViewId : binding.wordLettersFlow.getReferencedIds()) {
-            ((TextView) findViewById(wordLetterTextViewId)).setText(BLANK_LETTER.toString());
+            TextView wordLetterTextView = findViewById(wordLetterTextViewId);
+            wordLetterTextView.setText(BLANK_LETTER.toString());
         }
     }
 
@@ -136,40 +137,26 @@ public class SingleplayerActivity extends AppCompatActivity implements Singlepla
     }
 
     @Override
-    public void showLevelPassedDialog(int maxCoins, int receivedCoins) {
-        //TODO: replace with actual dialog
-        Toaster.showShortToast(App.getInstance(),
-                String.format("Correct! Got %s/%s coins", receivedCoins, maxCoins));
+    public void showGotCoinsForPassingLevel(int coinCount) {
+        //TODO
+    }
+
+    @Override
+    public void showWordIsCorrect() {
+        setGameUiClickable(false);
         binding.selectLettersFlow.setVisibility(View.INVISIBLE);
+        showWordCorrectnessAnimations(
+                (AnimationSet) AnimationUtils.loadAnimation(this, R.anim.singleplayer_correct_word_animation_scaling),
+                R.drawable.singleplayer_word_letter_neutral_to_correct,
+                presenter::showNextCardWithReward);
     }
 
     @Override
     public void showWordIsIncorrect() {
-        AnimationSet animationSet = (AnimationSet) AnimationUtils.loadAnimation(
-                this,
-                R.anim.singleplayer_incorrect_word_animation_rotate);
-
-        Animation lastAnimation = animationSet.getAnimations()
-                .get(animationSet.getAnimations().size() - 1);
-        int totalDuration = (int) (lastAnimation.getStartOffset() + lastAnimation.getDuration());
-        
-        int[] wordLettersIds = binding.wordLettersFlow.getReferencedIds();
-        for (int wordLetterId : wordLettersIds) {
-            View wordLetter = findViewById(wordLetterId);
-            if (wordLetter.getVisibility() == View.VISIBLE) {
-                TransitionDrawable transition = (TransitionDrawable) wordLetter.getBackground();
-
-                new Handler().postDelayed(
-                        () -> transition.reverseTransition(totalDuration),
-                        totalDuration);
-
-                wordLetter.startAnimation(animationSet);
-                transition.startTransition(totalDuration);
-            }
-        }
-
-        //TODO: remove toast
-        Toaster.showShortToast(App.getInstance(), "Incorrect!");
+        showWordCorrectnessAnimations(
+                (AnimationSet) AnimationUtils.loadAnimation(this, R.anim.singleplayer_incorrect_word_animation_rotate),
+                R.drawable.singleplayer_word_letter_neutral_to_incorrect,
+                () -> {});
     }
 
     @Override
@@ -216,6 +203,17 @@ public class SingleplayerActivity extends AppCompatActivity implements Singlepla
         binding.tooltipWordLetters.setVisibility(View.VISIBLE);
     }
 
+    @Override
+    public void setGameUiClickable(boolean clickable) {
+        for (int wordLetterId : binding.wordLettersFlow.getReferencedIds()) {
+            findViewById(wordLetterId).setClickable(false);
+        }
+
+        binding.removeNeedlessSelectLettersButtonBackground.setClickable(clickable);
+        binding.nextAssociationButtonBackground.setClickable(clickable);
+        binding.skipCardButtonBackground.setClickable(clickable);
+    }
+
     private void setUpViews() {
         initAds();
 
@@ -252,6 +250,32 @@ public class SingleplayerActivity extends AppCompatActivity implements Singlepla
 
             findViewById(selectLettersReferencedIds[i]).setOnClickListener((v) ->
                     presenter.onSelectLetterClicked(finalIndex, String.valueOf(((TextView) v).getText())));
+        }
+    }
+
+    private void showWordCorrectnessAnimations(AnimationSet animationSet, int additionalAnimationDrawableId, Runnable onAnimationEnd) {
+        Animation lastAnimation = animationSet.getAnimations()
+                .get(animationSet.getAnimations().size() - 1);
+        int totalDuration = (int) (lastAnimation.getStartOffset() + lastAnimation.getDuration());
+
+        int[] wordLettersIds = binding.wordLettersFlow.getReferencedIds();
+        for (int wordLetterId : wordLettersIds) {
+            View wordLetter = findViewById(wordLetterId);
+            if (wordLetter.getVisibility() == View.VISIBLE) {
+                wordLetter.setBackground(AppCompatResources.getDrawable(this, additionalAnimationDrawableId));
+                TransitionDrawable transition = (TransitionDrawable) wordLetter.getBackground();
+
+                new Handler().postDelayed(
+                        () -> transition.reverseTransition(totalDuration),
+                        totalDuration);
+
+                new Handler().postDelayed(
+                        onAnimationEnd,
+                        totalDuration * 2 + SingleplayerContract.DELAY_BEFORE_NEW_LEVEL);
+
+                wordLetter.startAnimation(animationSet);
+                transition.startTransition(totalDuration);
+            }
         }
     }
 }

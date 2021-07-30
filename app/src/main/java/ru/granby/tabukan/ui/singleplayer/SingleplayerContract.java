@@ -16,7 +16,9 @@ public interface SingleplayerContract {
     int SKIP_CARD_PRICE = 5;
     int CARD_INDEX_TO_HIDE_TOOLTIPS = 2;
     int ASSOCIATION_INDEX_TO_HIDE_TOOLTIPS = 2;
-    int TEMP_TOOLTIPS_DURATION = 7; // seconds
+    int TEMP_TOOLTIPS_DURATION = 7000; // ms
+    int DELAY_BEFORE_NEW_LEVEL = 500; // ms
+    int LEVEL_REWARD = 100; // TODO: rethink
 
     interface View extends BaseContract.View {
         void showAdBanner(AdRequest adRequest);
@@ -30,12 +32,14 @@ public interface SingleplayerContract {
         void showWordLetters(List<Character> wordLetters);
         void showSelectLetters(List<Character> selectLetters);
         void setUpAssociations(List<Association> associations);
-        void showLevelPassedDialog(int maxCoins, int receivedCoins);
+        void showGotCoinsForPassingLevel(int coinCount);
+        void showWordIsCorrect();
         void showWordIsIncorrect();
         void showNotEnoughBalance();
         void showNoMoreLevelsDialog();
         void hideTooltips();
         void showTooltips();
+        void setGameUiClickable(boolean clickable);
     }
 
     interface Presenter extends BaseContract.Presenter<View, Interactor> {
@@ -49,6 +53,7 @@ public interface SingleplayerContract {
         void onWordLetterClicked(int viewIndex, String viewText);
         void onSelectLetterClicked(int viewIndex, String viewText);
         void onGuideClicked();
+        void showNextCardWithReward();
     }
 
     interface Interactor extends BaseContract.Interactor {

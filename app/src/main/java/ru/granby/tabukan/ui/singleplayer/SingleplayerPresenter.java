@@ -186,8 +186,9 @@ public class SingleplayerPresenter extends BasePresenter<SingleplayerContract.Vi
 
                             if(areWordLettersCorrect(dto.getWordLetters(), dto.getCard())) {
                                 view.showAllAssociations();
-                                //TODO: replace maxCoins and receivedCoins with normal (calculated, constant) values
-                                view.showLevelPassedDialog(5, 1);
+                                //TODO: replace coinCount with normal (calculated, constant) value
+                                view.showWordIsCorrect();
+                                view.showGotCoinsForPassingLevel(5);
                             } else {
                                 view.showWordIsIncorrect();
                             }
@@ -231,11 +232,12 @@ public class SingleplayerPresenter extends BasePresenter<SingleplayerContract.Vi
                             ).andThen(Single.just(selectLetters));
                         })
                     .observeOn(AndroidSchedulers.mainThread())
-                    .subscribe((selectLetters) -> {
-                            view.showBlankWordLetters();
-                            view.showSelectLetters(selectLetters);
-                        }, (throwable -> Log.e(TAG, "can't onRemoveNeedlessSelectLettersClicked", throwable))
-                    )
+                        .subscribe((selectLetters) -> {
+                                view.showBlankWordLetters();
+                                view.showSelectLetters(selectLetters);
+                                view.setGameUiClickable(true);
+                            }, (throwable -> Log.e(TAG, "can't onRemoveNeedlessSelectLettersClicked", throwable))
+                        )
         );
     }
 
@@ -274,43 +276,81 @@ public class SingleplayerPresenter extends BasePresenter<SingleplayerContract.Vi
     }
 
     @Override
+    public void showNextCardWithReward() {
+        interactor.addDisposable(
+                interactor.getCoinBalance()
+                .subscribeOn(Schedulers.io())
+                .observeOn(Schedulers.io())
+                    .map((coinBalance) -> CoinBalanceHelper.deposit(coinBalance, SingleplayerContract.LEVEL_REWARD))
+                    .flatMapCompletable(ignored -> Completable.complete())
+                .observeOn(AndroidSchedulers.mainThread())
+                    .subscribe(
+                            this::showNextCard,
+                            throwable -> {}
+                    )
+        );
+        showNextCard();
+    }
+
+    @Override
     public void onSkipCardClicked() {
         interactor.addDisposable(
+                interactor.getCoinBalance()
+                .subscribeOn(Schedulers.io())
+                .observeOn(Schedulers.io())
+                    .map(coinBalance -> CoinBalanceHelper.withdraw(coinBalance, SingleplayerContract.SKIP_CARD_PRICE))
+                    .flatMap(newCoinBalance ->
+                            interactor.setCoinBalance(newCoinBalance)
+                            .andThen(Single.just(newCoinBalance)))
+                .observeOn(AndroidSchedulers.mainThread())
+                    .subscribe(
+                            newCoinBalance -> {
+                                view.showCoinBalance(newCoinBalance);
+                                showNextCard();
+                            },
+                            throwable -> {
+                                if(throwable instanceof NotEnoughBalanceException) {
+                                    Log.i(TAG, "onSkipCardClicked: not enough balance");
+                                    view.showNotEnoughBalance();
+                                } else {
+                                    Log.e(TAG, "can't skip card: ", throwable);
+                                }
+                            }
+                )
+        );
+    }
+
+    private void showNextCard() {
+        interactor.addDisposable(
                 Single.zip(
-                        interactor.getCoinBalance(),
                         interactor.getCardsCount(),
                         interactor.getCurrentCardIndex(),
-                        (coinBalance, cardsCount, cardIndex) -> {
-                            coinBalance = CoinBalanceHelper.withdraw(coinBalance, SingleplayerContract.SKIP_CARD_PRICE);
+                        (cardsCount, cardIndex) -> {
                             cardIndex = CardIndexHelper.changeIndexTo(cardIndex + 1, cardsCount);
-                            return new CoinBalanceAndCardIndex(coinBalance, cardIndex);
+                            return cardIndex;
                         }
                 ).subscribeOn(Schedulers.io())
-                .observeOn(Schedulers.io())
-                    .flatMap(dto ->
-                            Completable.mergeArray(
-                                    interactor.setCoinBalance(dto.getCoinBalance()),
-                                    interactor.setCurrentCardIndex(dto.getCardIndex()),
-                                    interactor.setLastAssociationIndex(0),
-                                    interactor.setCurrentWordLetters(new ArrayList<>()),
-                                    interactor.setCurrentSelectLetters(new ArrayList<>())
-                            ).andThen(Single.just(dto))
-                    )
-                .observeOn(AndroidSchedulers.mainThread())
-                    .subscribe((coinBalanceAndCardIndex) -> {
-                        showCard(coinBalanceAndCardIndex.getCardIndex());
-                        view.showCoinBalance(coinBalanceAndCardIndex.getCoinBalance());
-                    }, (throwable) -> {
-                        if(throwable instanceof NotEnoughBalanceException) {
-                            Log.i(TAG, "onSkipCardClicked: not enough balance");
-                            view.showNotEnoughBalance();
-                        } else if(throwable instanceof IncorrectCardIndexException) {
-                            Log.i(TAG, "onSkipCardClicked: incorrect card index");
-                            view.showNoMoreLevelsDialog();
-                        } else {
-                            Log.e(TAG, "can't skip card: ", throwable);
-                        }
-                    })
+                        .observeOn(Schedulers.io())
+                        .flatMap(cardIndex ->
+                                Completable.mergeArray(
+                                        interactor.setCurrentCardIndex(cardIndex),
+                                        interactor.setLastAssociationIndex(0),
+                                        interactor.setCurrentWordLetters(new ArrayList<>()),
+                                        interactor.setCurrentSelectLetters(new ArrayList<>())
+                                ).andThen(Single.just(cardIndex))
+                        )
+                        .observeOn(AndroidSchedulers.mainThread())
+                        .subscribe(
+                            this::showCard,
+                            (throwable) -> {
+                                if(throwable instanceof IncorrectCardIndexException) {
+                                    Log.i(TAG, "onSkipCardClicked: incorrect card index");
+                                    view.showNoMoreLevelsDialog();
+                                } else {
+                                    Log.e(TAG, "can't skip card: ", throwable);
+                                }
+                            }
+                        )
         );
     }
 
@@ -354,6 +394,7 @@ public class SingleplayerPresenter extends BasePresenter<SingleplayerContract.Vi
                             view.showCurrentLevel(cardIndex + 1);
                             view.showWordLetters(dto.getWordLetters());
                             view.showSelectLetters(dto.getSelectLetters());
+                            view.setGameUiClickable(true);
                     }), (throwable) -> Log.e(TAG, "can't showCard: ", throwable)
                 )
         );
@@ -397,7 +438,7 @@ public class SingleplayerPresenter extends BasePresenter<SingleplayerContract.Vi
     private void showTempTooltips() {
         view.showTooltips();
         interactor.addDisposable(Completable.complete()
-                .delay(SingleplayerContract.TEMP_TOOLTIPS_DURATION, TimeUnit.SECONDS)
+                .delay(SingleplayerContract.TEMP_TOOLTIPS_DURATION, TimeUnit.MILLISECONDS)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(() -> view.hideTooltips()));
