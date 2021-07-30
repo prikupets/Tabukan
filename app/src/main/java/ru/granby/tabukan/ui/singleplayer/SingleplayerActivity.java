@@ -206,7 +206,7 @@ public class SingleplayerActivity extends AppCompatActivity implements Singlepla
     @Override
     public void setGameUiClickable(boolean clickable) {
         for (int wordLetterId : binding.wordLettersFlow.getReferencedIds()) {
-            findViewById(wordLetterId).setClickable(false);
+            findViewById(wordLetterId).setClickable(clickable);
         }
 
         binding.removeNeedlessSelectLettersButtonBackground.setClickable(clickable);
