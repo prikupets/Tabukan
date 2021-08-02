@@ -28,4 +28,6 @@
     <string name="payment_error">There was an error during payment</string>
     <string name="get_coins_for_ads_button" >Get free coins</string>
     <string name="get_coins_for_ad">Watch the promotional video and get 35 free coins</string>
+    <string name="about_app_text">Author in VK: https://vk.com/granlovestea \nEmail: contact@granby.ru \nOpen source licenses: \n</string>
+    <string name="about_app_title">About the application</string>
 </resources>

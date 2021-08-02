@@ -1,8 +1,8 @@
 package ru.granby.tabukan.ui.menu;
 
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.LayoutInflater;
 import android.view.View;
 
 import androidx.appcompat.app.AlertDialog;
@@ -64,6 +64,17 @@ public class MenuActivity extends AppCompatActivity implements MenuContract.View
     }
 
     @Override
+    public void showAboutAppDialog() {
+        View layout = LayoutInflater.from(this).inflate(R.layout.about_app_dialog, null);
+        new AlertDialog.Builder(this)
+                .setView(layout)
+                .setTitle(getResources().getString(R.string.about_app_title))
+                .setPositiveButton(R.string.ok, (dialog, which) -> dialog.dismiss())
+                .create()
+                .show();
+    }
+
+    @Override
     public void startMultiplayerActivity() {
         startActivity(new Intent(this, MultiplayerActivity.class));
     }
@@ -112,6 +123,7 @@ public class MenuActivity extends AppCompatActivity implements MenuContract.View
 
     private void setUpViews() {
         presenter.initAds();
+        binding.headerBackground.setOnClickListener(v -> presenter.onAboutAppClicked());
         binding.playMultiplayerButtonBackground.setOnClickListener(v -> presenter.onPlayMultiplayerClicked());
         binding.playSingleplayerButtonBackground.setOnClickListener(v -> presenter.onPlaySingleplayerClicked());
         binding.removeAdsButtonBackground.setOnClickListener(v -> presenter.onRemoveAdsClicked());

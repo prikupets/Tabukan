@@ -62,6 +62,11 @@ public class MenuPresenter extends BasePresenter<MenuContract.View, MenuContract
     }
 
     @Override
+    public void onAboutAppClicked() {
+        view.showAboutAppDialog();
+    }
+
+    @Override
     public void onPlayMultiplayerClicked() {
         view.startMultiplayerActivity();
     }
