@@ -17,12 +17,12 @@ import io.reactivex.rxjava3.functions.Consumer;
 import ru.granby.tabukan.App;
 import ru.granby.tabukan.BuildConfig;
 
-abstract class SharedPreferencesBase {
-    private static final String TAG = "~SharedPreferencesBase";
+abstract class SecureRxSharedPreferences {
+    private static final String TAG = "~RxSharedPreferences";
     private Gson gson;
     private SharedPreferences sharedPreferences;
 
-    public SharedPreferencesBase(String preferencesTag, String password) {
+    public SecureRxSharedPreferences(String preferencesTag, String password) {
         if(BuildConfig.DEBUG) {
             sharedPreferences = App.getInstance().getSharedPreferences(preferencesTag, Context.MODE_PRIVATE);
         } else {

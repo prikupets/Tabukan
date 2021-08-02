@@ -35,3 +35,6 @@ output.json
 #NDK
 obj/
 .externalNativeBuild
+
+# Secrets (api keys, sharedpreferences key, etc)
+/app/src/main/res-common/values/secrets.xml
