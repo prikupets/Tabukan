@@ -23,15 +23,27 @@
             </intent-filter>
         </activity>
 
-        <activity android:name="ru.granby.tabukan.ui.menu.MenuActivity"
-            android:screenOrientation="portrait">
-        </activity>
+        <activity
+            android:name="ru.granby.tabukan.ui.menu.MenuActivity"
+            android:screenOrientation="portrait"
+            android:launchMode="singleTop"
+            />
 
-        <activity android:name=".ui.multiplayer.MultiplayerActivity"
-            android:screenOrientation="portrait"/>
+        <activity
+            android:name=".ui.multiplayer.MultiplayerActivity"
+            android:screenOrientation="portrait"
+            android:launchMode="singleTop"
+            />
 
         <activity android:name=".ui.singleplayer.SingleplayerActivity"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait"
+            android:launchMode="singleTop"
+            />
+
+        <activity android:name=".ui.store.StoreActivity"
+            android:screenOrientation="portrait"
+            android:launchMode="singleTop"
+            />
 
         <meta-data
             android:name="com.google.android.gms.ads.APPLICATION_ID"
