@@ -89,12 +89,12 @@ public class SingleplayerPresenter extends BasePresenter<SingleplayerContract.Vi
     public void showCoinBalance() {
         interactor.addDisposable(
                 interactor.getCoinBalance()
-                    .subscribeOn(Schedulers.io())
-                    .observeOn(AndroidSchedulers.mainThread())
-                        .subscribe(
-                            view::showCoinBalance,
-                            (throwable) -> Log.e(TAG, "can't getCoinBalance: ", throwable)
-                        )
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                    .subscribe(
+                        view::showCoinBalance,
+                        (throwable) -> Log.e(TAG, "can't showCoinBalance: ", throwable)
+                    )
         );
     }
 
