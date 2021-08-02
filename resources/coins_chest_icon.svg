@@ -1,0 +1,53 @@
+<svg id="Слой_1" data-name="Слой 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+  <defs>
+    <style>
+      .cls-1 {
+        fill: #f8d18a;
+      }
+
+      .cls-1, .cls-2, .cls-3, .cls-5 {
+        stroke: #715139;
+        stroke-width: 10px;
+      }
+
+      .cls-1, .cls-2, .cls-3, .cls-4, .cls-5 {
+        stroke-miterlimit: 10;
+      }
+
+      .cls-2 {
+        fill: #e8bb61;
+      }
+
+      .cls-3, .cls-4 {
+        fill: none;
+      }
+
+      .cls-4 {
+        stroke: #f8d18a;
+        stroke-width: 5px;
+      }
+
+      .cls-5 {
+        fill: #f5a361;
+      }
+    </style>
+  </defs>
+  <title>coins_chest_icon</title>
+  <g>
+    <path class="cls-1" d="M501,407.51H11V159.45a55,55,0,0,1,55-55h380.1a55,55,0,0,1,54.95,55V407.51Z"/>
+    <path class="cls-2" d="M447.74,211H67.81V151.76a47.27,47.27,0,0,1,47.26-47.27H400.45a47.27,47.27,0,0,1,47.27,47.27V211Z"/>
+    <line class="cls-3" x1="67.81" y1="210.99" x2="12.81" y2="210.99"/>
+    <line class="cls-3" x1="442.79" y1="210.99" x2="497.81" y2="210.99"/>
+    <rect class="cls-2" x="67.81" y="256" width="379.93" height="109.18"/>
+    <line class="cls-4" x1="69.96" y1="293.31" x2="445.94" y2="293.31"/>
+    <line class="cls-3" x1="66.03" y1="256" x2="445.94" y2="256"/>
+    <line class="cls-4" x1="442.06" y1="143.99" x2="73.86" y2="143.99"/>
+    <line class="cls-3" x1="67.81" y1="365.18" x2="447.74" y2="365.18"/>
+    <line class="cls-4" x1="440.08" y1="177.5" x2="71.89" y2="177.5"/>
+    <line class="cls-4" x1="67.99" y1="329.24" x2="443.98" y2="329.24"/>
+    <path class="cls-3" d="M448.1,211H68.17V151.76a47.27,47.27,0,0,1,47.26-47.27H400.82a47.26,47.26,0,0,1,47.26,47.27V211Z"/>
+    <rect class="cls-3" x="67.81" y="256" width="379.93" height="109.18"/>
+    <path class="cls-5" d="M264.56,293.08H251a25.25,25.25,0,0,1-25.26-25.25V211.22h64.07v56.61A25.25,25.25,0,0,1,264.56,293.08Z"/>
+    <rect class="cls-1" x="252.05" y="242.59" width="11.44" height="11.44"/>
+  </g>
+</svg>

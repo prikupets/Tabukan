@@ -64,16 +64,17 @@
 
         android:layout_marginBottom="@dimen/_3sdp"
 
-        app:layout_constraintBottom_toBottomOf="@+id/coins_button_background"
-        app:layout_constraintEnd_toStartOf="@id/coins_button_icon"
-        app:layout_constraintHorizontal_chainStyle="packed"
         app:layout_constraintStart_toStartOf="@id/coins_button_background"
-        app:layout_constraintTop_toTopOf="@+id/coins_button_background" />
+        app:layout_constraintEnd_toStartOf="@id/coins_button_icon"
+        app:layout_constraintTop_toTopOf="@+id/coins_button_icon"
+        app:layout_constraintBottom_toBottomOf="@+id/coins_button_icon"
+        app:layout_constraintHorizontal_chainStyle="packed"
+        />
 
     <View
         android:id="@+id/coins_button_icon"
-        android:layout_width="@dimen/_14sdp"
-        android:layout_height="@dimen/_14sdp"
+        android:layout_width="@dimen/_11sdp"
+        android:layout_height="@dimen/_11sdp"
 
         android:background="@drawable/coin_icon"
 
@@ -82,9 +83,10 @@
 
         app:layout_constraintBottom_toBottomOf="@+id/coins_button_background"
         app:layout_constraintEnd_toEndOf="@+id/coins_button_background"
-        app:layout_constraintHorizontal_chainStyle="packed"
         app:layout_constraintStart_toEndOf="@id/coins_button_text"
-        app:layout_constraintTop_toTopOf="@+id/coins_button_background" />
+        app:layout_constraintTop_toTopOf="@+id/coins_button_background"
+        app:layout_constraintHorizontal_chainStyle="packed"
+        />
 
 
     <View

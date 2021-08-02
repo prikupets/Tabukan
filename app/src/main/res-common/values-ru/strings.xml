@@ -24,4 +24,6 @@
     <string name="ads_already_removed">Реклама уже удалена</string>
     <string name="thanks_for_the_purchase">Благодарим за покупку!</string>
     <string name="payment_error">Произошла ошибка при оплате</string>
+    <string name="get_coins_for_ads_button">Получить монеты</string>
+    <string name="get_coins_for_ad">Посмотри рекламное видео и получи 35 монет бесплатно</string>
 </resources>

@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    >
+
+    <data>
+        <variable name="coinsAmount" type="java.lang.String" />
+        <variable name="coinsPrice" type="java.lang.String"/>
+        <variable name="coinsPackDrawable" type="android.graphics.drawable.Drawable"/>
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/coins_pack_root"
+        android:layout_width="@dimen/_125sdp"
+        android:layout_height="@dimen/_156sdp"
+        >
+
+
+        <View
+            android:id="@+id/coins_pack_background"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+
+            android:background="@drawable/store_coins_pack_background"
+
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            />
+
+        <ImageView
+            android:id="@+id/coins_pack_image"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+
+            android:src="@{coinsPackDrawable}"
+            android:scaleType="centerInside"
+
+            android:layout_marginTop="@dimen/_36sdp"
+            android:layout_marginBottom="@dimen/_38sdp"
+            android:layout_marginStart="@dimen/_10sdp"
+            android:layout_marginEnd="@dimen/_12sdp"
+
+            app:layout_constraintStart_toStartOf="@id/coins_pack_background"
+            app:layout_constraintEnd_toEndOf="@id/coins_pack_background"
+            app:layout_constraintTop_toTopOf="@id/coins_pack_background"
+            app:layout_constraintBottom_toBottomOf="@id/coins_pack_background"
+            />
+
+        <TextView
+            android:id="@+id/coins_amount_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+
+            android:text="@{coinsAmount}"
+            android:fontFamily="@font/assistant_medium"
+            android:textSize="@dimen/_16ssp"
+            android:textAlignment="center"
+
+            android:gravity="center"
+
+            android:layout_marginBottom="@dimen/_3sdp"
+
+            app:layout_constraintStart_toStartOf="@id/coins_pack_background"
+            app:layout_constraintEnd_toStartOf="@id/coins_amount_icon"
+            app:layout_constraintTop_toTopOf="@id/coins_amount_icon"
+            app:layout_constraintBottom_toBottomOf="@id/coins_amount_icon"
+            app:layout_constraintHorizontal_chainStyle="packed"
+            />
+
+        <View
+            android:id="@+id/coins_amount_icon"
+            android:layout_width="@dimen/_10sdp"
+            android:layout_height="@dimen/_10sdp"
+
+            android:background="@drawable/coin_icon"
+
+            android:layout_marginStart="@dimen/_3sdp"
+            android:layout_marginEnd="@dimen/_2sdp"
+            android:layout_marginBottom="@dimen/_12sdp"
+
+            app:layout_constraintStart_toEndOf="@id/coins_amount_text"
+            app:layout_constraintEnd_toEndOf="@id/coins_pack_background"
+            app:layout_constraintTop_toTopOf="@id/coins_pack_background"
+            app:layout_constraintBottom_toTopOf="@id/coins_pack_image"
+            app:layout_constraintHorizontal_chainStyle="packed"
+            />
+
+        <TextView
+            android:id="@+id/coins_price_text"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+
+            android:text="@{coinsPrice}"
+            android:fontFamily="@font/assistant_medium"
+            android:textSize="@dimen/_16ssp"
+
+            android:gravity="center"
+
+            android:layout_marginEnd="@dimen/_2sdp"
+            android:layout_marginTop="@dimen/_12sdp"
+            android:layout_marginBottom="@dimen/_2sdp"
+
+            app:layout_constraintStart_toStartOf="@id/coins_pack_background"
+            app:layout_constraintEnd_toEndOf="@id/coins_pack_background"
+            app:layout_constraintTop_toBottomOf="@id/coins_pack_image"
+            app:layout_constraintBottom_toBottomOf="@id/coins_pack_background"
+            />
+
+        <View
+            android:id="@+id/coins_pack_ripple"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+
+            android:background="?android:attr/selectableItemBackground"
+            />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

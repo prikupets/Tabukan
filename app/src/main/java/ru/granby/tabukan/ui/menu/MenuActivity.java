@@ -15,6 +15,7 @@ import ru.granby.tabukan.databinding.MenuActivityBinding;
 import ru.granby.tabukan.model.business.interactor.MenuInteractor;
 import ru.granby.tabukan.ui.multiplayer.MultiplayerActivity;
 import ru.granby.tabukan.ui.singleplayer.SingleplayerActivity;
+import ru.granby.tabukan.ui.store.StoreActivity;
 import ru.granby.tabukan.utils.Toaster;
 
 
@@ -73,6 +74,11 @@ public class MenuActivity extends AppCompatActivity implements MenuContract.View
     }
 
     @Override
+    public void startStoreActivity() {
+        startActivity(new Intent(this, StoreActivity.class));
+    }
+
+    @Override
     public void showAdsAlreadyRemoved() {
         Toaster.showLongToast(this, getResources().getString(R.string.ads_already_removed));
     }
@@ -109,5 +115,6 @@ public class MenuActivity extends AppCompatActivity implements MenuContract.View
         binding.playMultiplayerButtonBackground.setOnClickListener(v -> presenter.onPlayMultiplayerClicked());
         binding.playSingleplayerButtonBackground.setOnClickListener(v -> presenter.onPlaySingleplayerClicked());
         binding.removeAdsButtonBackground.setOnClickListener(v -> presenter.onRemoveAdsClicked());
+        binding.storeButtonBackground.setOnClickListener(v -> presenter.onStoreClicked());
     }
 }

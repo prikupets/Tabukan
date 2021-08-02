@@ -14,6 +14,7 @@ public interface MenuContract {
         void showAdBanner(AdRequest adRequest);
         void startMultiplayerActivity();
         void startSingleplayerActivity();
+        void startStoreActivity();
         void showAdsAlreadyRemoved();
         void showBuyRemoveAdsDialog();
         void showRemoveAdsBought();
@@ -25,6 +26,7 @@ public interface MenuContract {
         void initAds();
         void onPlayMultiplayerClicked();
         void onPlaySingleplayerClicked();
+        void onStoreClicked();
         void onRemoveAdsClicked();
         void onRemoveAdsBought();
         void onRemoveAdsPaymentError();

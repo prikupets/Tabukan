@@ -1,0 +1,233 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/store_root"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+
+        android:animateLayoutChanges="true">
+
+
+        <View
+            android:id="@+id/back_button_background"
+            android:layout_width="@dimen/_40sdp"
+            android:layout_height="@dimen/_40sdp"
+
+            android:layout_marginVertical="@dimen/_12sdp"
+            android:layout_marginStart="@dimen/_12sdp"
+
+            android:background="@drawable/rounded_shaded_honey_rectangle"
+
+            app:layout_constraintEnd_toStartOf="@id/coins_button_background"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <View
+            android:id="@+id/back_button_icon"
+            android:layout_width="@dimen/_16sdp"
+            android:layout_height="@dimen/_16sdp"
+
+            android:layout_marginBottom="@dimen/_3sdp"
+
+            android:background="@drawable/left_icon"
+
+            app:layout_constraintBottom_toBottomOf="@+id/back_button_background"
+            app:layout_constraintEnd_toEndOf="@id/back_button_background"
+            app:layout_constraintStart_toStartOf="@id/back_button_background"
+            app:layout_constraintTop_toTopOf="@+id/back_button_background" />
+
+
+        <View
+            android:id="@+id/coins_button_background"
+            android:layout_width="0dp"
+            android:layout_height="@dimen/_40sdp"
+
+            android:layout_marginVertical="@dimen/_12sdp"
+
+            android:layout_marginStart="@dimen/_12sdp"
+            android:layout_marginEnd="@dimen/_12sdp"
+            android:background="@drawable/rounded_shaded_honey_rectangle"
+
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/back_button_background"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/coins_button_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+
+
+            android:layout_marginBottom="@dimen/_3sdp"
+            android:text="0"
+            android:textAlignment="center"
+            android:textSize="@dimen/_14ssp"
+
+            android:textStyle="bold"
+
+            app:layout_constraintBottom_toBottomOf="@+id/coins_button_icon"
+            app:layout_constraintEnd_toStartOf="@id/coins_button_icon"
+            app:layout_constraintHorizontal_chainStyle="packed"
+            app:layout_constraintStart_toStartOf="@id/coins_button_background"
+            app:layout_constraintTop_toTopOf="@+id/coins_button_icon" />
+
+        <View
+            android:id="@+id/coins_button_icon"
+            android:layout_width="@dimen/_11sdp"
+            android:layout_height="@dimen/_11sdp"
+
+            android:layout_marginStart="@dimen/_3sdp"
+            android:layout_marginBottom="@dimen/_3sdp"
+
+            android:background="@drawable/coin_icon"
+
+            app:layout_constraintBottom_toBottomOf="@+id/coins_button_background"
+            app:layout_constraintEnd_toEndOf="@+id/coins_button_background"
+            app:layout_constraintHorizontal_chainStyle="packed"
+            app:layout_constraintStart_toEndOf="@id/coins_button_text"
+            app:layout_constraintTop_toTopOf="@+id/coins_button_background" />
+
+
+        <androidx.constraintlayout.helper.widget.Flow
+            android:id="@+id/coins_packs"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+
+            app:flow_horizontalGap="@dimen/_8sdp"
+            app:flow_verticalGap="@dimen/_8sdp"
+            app:flow_maxElementsWrap="2"
+            app:flow_wrapMode="chain"
+
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/back_button_background"
+            app:layout_constraintBottom_toTopOf="@id/coins_for_ad_background"
+            app:constraint_referenced_ids="coins_pack_pouch, coins_pack_bag, coins_pack_chest, coins_pack_big_chest" />
+
+        <include
+            android:id="@+id/coins_pack_pouch"
+            layout="@layout/store_coins_pack"
+
+            app:coinsAmount="@{`100`}"
+            app:coinsPrice="@{`200$`}"
+            app:coinsPackDrawable="@{@drawable/coins_pouch_icon}"
+            />
+
+        <include
+            android:id="@+id/coins_pack_bag"
+            layout="@layout/store_coins_pack"
+
+            app:coinsAmount="@{`100`}"
+            app:coinsPrice="@{`200$`}"
+            app:coinsPackDrawable="@{@drawable/coins_bag_icon}"
+            />
+
+        <include
+            android:id="@+id/coins_pack_chest"
+            layout="@layout/store_coins_pack"
+
+            app:coinsAmount="@{`100`}"
+            app:coinsPrice="@{`200$`}"
+            app:coinsPackDrawable="@{@drawable/coins_chest_icon}"
+            />
+
+        <include
+            android:id="@+id/coins_pack_big_chest"
+            layout="@layout/store_coins_pack"
+
+            app:coinsAmount="@{`100`}"
+            app:coinsPrice="@{`200$`}"
+            app:coinsPackDrawable="@{@drawable/coins_big_chest_icon}"
+            />
+
+        <View
+            android:id="@+id/coins_for_ad_background"
+            android:layout_width="0dp"
+            android:layout_height="@dimen/_96sdp"
+
+            android:background="@color/honey9"
+
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
+
+        <TextView
+            android:id="@+id/coins_for_ad_header"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+
+            android:layout_marginHorizontal="@dimen/_8sdp"
+
+            android:fontFamily="@font/roboto_medium"
+            android:gravity="center"
+            android:text="@string/get_coins_for_ad"
+            android:textAlignment="center"
+
+            android:textSize="@dimen/_13ssp"
+
+            app:layout_constraintBottom_toTopOf="@+id/coins_for_ad_button_background"
+            app:layout_constraintEnd_toEndOf="@id/coins_for_ad_background"
+            app:layout_constraintStart_toStartOf="@id/coins_for_ad_background"
+            app:layout_constraintTop_toTopOf="@id/coins_for_ad_background"
+            app:layout_constraintVertical_chainStyle="packed" />
+
+        <View
+            android:id="@+id/coins_for_ad_button_background"
+            android:layout_width="0dp"
+            android:layout_height="@dimen/_40sdp"
+
+            android:clickable="true"
+            android:focusable="true"
+
+            android:background="@drawable/rounded_shaded_orange4_rectangle"
+
+            android:layout_marginHorizontal="@dimen/_32sdp"
+            android:layout_marginVertical="@dimen/_12sdp"
+
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintVertical_chainStyle="packed"
+            />
+
+        <TextView
+            android:id="@+id/coins_for_ad_button_text"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+
+            android:layout_marginBottom="@dimen/_3sdp"
+            android:fontFamily="@font/roboto_medium"
+            android:gravity="center"
+            android:text="@string/get_coins_for_ads_button"
+
+            android:textAlignment="center"
+
+            android:textSize="@dimen/_14ssp"
+
+            app:layout_constraintBottom_toBottomOf="@id/coins_for_ad_button_background"
+            app:layout_constraintEnd_toEndOf="@id/coins_for_ad_button_background"
+            app:layout_constraintStart_toStartOf="@id/coins_for_ad_button_background"
+            app:layout_constraintTop_toTopOf="@id/coins_for_ad_button_background" />
+
+        <View
+            android:id="@+id/coins_for_ad_button_icon"
+            android:layout_width="@dimen/_12sdp"
+            android:layout_height="@dimen/_12sdp"
+
+            android:layout_marginEnd="@dimen/_12sdp"
+
+            android:layout_marginBottom="@dimen/_3sdp"
+            android:background="@drawable/right_icon"
+
+            app:layout_constraintBottom_toBottomOf="@id/coins_for_ad_button_background"
+            app:layout_constraintDimensionRatio="H,1:1"
+            app:layout_constraintEnd_toEndOf="@id/coins_for_ad_button_background"
+            app:layout_constraintTop_toTopOf="@id/coins_for_ad_button_text" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

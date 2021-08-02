@@ -5,12 +5,10 @@
         android:drawable="@color/yellow3"/>
 
     <item
-        android:gravity="center"
-        >
+        android:gravity="center">
 
         <bitmap
-            android:src="@mipmap/ic_launcher"
-            />
+            android:src="@mipmap/ic_launcher" />
     </item>
 
 </layer-list>

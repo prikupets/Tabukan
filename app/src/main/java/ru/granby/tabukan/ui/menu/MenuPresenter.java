@@ -72,6 +72,11 @@ public class MenuPresenter extends BasePresenter<MenuContract.View, MenuContract
     }
 
     @Override
+    public void onStoreClicked() {
+        view.startStoreActivity();
+    }
+
+    @Override
     public void onRemoveAdsClicked() {
         interactor.addDisposable(
                 interactor.isAdsRemoved()
