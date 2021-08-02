@@ -42,6 +42,7 @@ android {
                     'src/main/res-common/drawables/other',
                     'src/main/res-common/drawables/raster',
                     'src/main/res-common/drawables/vector',
+                    'src/main/res-screen/about-app',
                     'src/main/res-screen/dialog',
                     'src/main/res-screen/menu',
                     'src/main/res-screen/multiplayer',
