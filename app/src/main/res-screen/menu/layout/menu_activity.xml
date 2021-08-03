@@ -300,7 +300,7 @@
 
         android:layout_margin="@dimen/_12sdp"
 
-        android:background="@drawable/rules_icon"
+        android:background="@drawable/guide_icon"
 
         app:layout_constraintStart_toStartOf="@id/guide_button_background"
         app:layout_constraintEnd_toEndOf="@id/guide_button_background"
