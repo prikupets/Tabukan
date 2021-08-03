@@ -4,8 +4,8 @@
     <!--UI-->
     <string name="app_name">Tabukan</string>
     <string name="next_card">Next</string>
-    <string name="title_tooltip">explain this word</string>
-    <string name="forbidden_words_tooltip">without using these:</string>
+    <string name="tooltip_header">explain this word</string>
+    <string name="tooltip_tabu_words">without using these:</string>
     <string name="play_multiplayer">Play with friends</string>
     <string name="play_singleplayer">Play singleplayer</string>
     <string name="settings">Settings</string>

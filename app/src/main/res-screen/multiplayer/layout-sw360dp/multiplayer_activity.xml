@@ -175,14 +175,14 @@
         android:layout_height="0dp"
 
         android:layout_marginHorizontal="@dimen/_32sdp"
-        android:layout_marginVertical="@dimen/_6sdp"
+        android:layout_marginTop="@dimen/_6sdp"
 
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@id/back_button_background"
         app:layout_constraintBottom_toTopOf="@id/next_card_button_background"
 
-        app:layout_constraintDimensionRatio="3:4"
+        app:layout_constraintDimensionRatio="3:4.5"
         />
 
     <include
