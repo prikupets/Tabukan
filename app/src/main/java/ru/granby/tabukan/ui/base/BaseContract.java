@@ -4,7 +4,7 @@ import io.reactivex.rxjava3.disposables.Disposable;
 
 public interface BaseContract {
     interface View {
-        void finishView();
+
     }
 
     interface Presenter<V extends View, I extends Interactor> {

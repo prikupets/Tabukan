@@ -11,6 +11,7 @@ import ru.granby.tabukan.ui.base.BaseContract;
 
 public interface MenuContract {
     interface View extends BaseContract.View {
+        void finishView();
         void showAdBanner(AdRequest adRequest);
         void showAboutAppDialog();
         void startMultiplayerActivity();

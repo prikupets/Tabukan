@@ -8,6 +8,7 @@ import ru.granby.tabukan.ui.base.BaseContract;
 
 public interface StoreContract {
     interface View extends BaseContract.View {
+        void finishView();
         void showRegionalPrices(String coinsPouchPrice,
                                 String coinsBagPrice,
                                 String coinsChestPrice,

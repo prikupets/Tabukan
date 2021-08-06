@@ -21,6 +21,7 @@ public interface SingleplayerContract {
     int LEVEL_REWARD = 50; // TODO: rethink
 
     interface View extends BaseContract.View {
+        void finishView();
         void showAdBanner(AdRequest adRequest);
         void hideAds();
         void showCoinBalance(int coinBalance);
