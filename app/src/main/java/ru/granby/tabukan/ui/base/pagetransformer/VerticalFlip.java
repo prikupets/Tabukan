@@ -1,4 +1,4 @@
-package ru.granby.tabukan.ui.multiplayer.deck.pagetransformer;
+package ru.granby.tabukan.ui.base.pagetransformer;
 
 import android.view.View;
 

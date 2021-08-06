@@ -1,4 +1,4 @@
-package ru.granby.tabukan.model.business.dto.singleplayer;
+package ru.granby.tabukan.model.business.dto.game;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
