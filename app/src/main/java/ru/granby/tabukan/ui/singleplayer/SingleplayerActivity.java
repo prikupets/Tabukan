@@ -21,7 +21,7 @@ import nl.dionsegijn.konfetti.models.Shape;
 import nl.dionsegijn.konfetti.models.Size;
 import ru.granby.tabukan.R;
 import ru.granby.tabukan.databinding.SingleplayerActivityBinding;
-import ru.granby.tabukan.localization.Localization;
+import ru.granby.tabukan.localization.Localizer;
 import ru.granby.tabukan.model.business.interactor.SingleplayerInteractor;
 import ru.granby.tabukan.model.data.database.relations.game.Association;
 import ru.granby.tabukan.utils.Toaster;
@@ -134,7 +134,7 @@ public class SingleplayerActivity extends AppCompatActivity implements Singlepla
     public void setUpAssociations(List<Association> associations) {
         for (int i = 0; i < associations.size(); i++) {
             TextView associationTextView = findViewById(binding.associations.getReferencedIds()[i]);
-            associationTextView.setText(Localization.getInstance().getText(associations.get(i).getLocalizedText()));
+            associationTextView.setText(Localizer.getInstance().localize(associations.get(i).getLocalizedText()));
             associationTextView.setVisibility(View.INVISIBLE);
         }
     }
@@ -164,9 +164,7 @@ public class SingleplayerActivity extends AppCompatActivity implements Singlepla
         showWordCorrectnessAnimations(
                 (AnimationSet) AnimationUtils.loadAnimation(this, R.anim.singleplayer_correct_word_animation_scaling),
                 R.drawable.singleplayer_word_letter_neutral_to_correct,
-                () -> {
-                    presenter.showNextCardWithReward();
-                });
+                presenter::showNextCardWithReward);
     }
 
     @Override
@@ -233,7 +231,7 @@ public class SingleplayerActivity extends AppCompatActivity implements Singlepla
     }
 
     private void setUpViews() {
-        initAds();
+        presenter.initAds();
 
         binding.backButtonBackground.setOnClickListener(v -> presenter.onBackClicked());
         binding.removeNeedlessSelectLettersButtonBackground.setOnClickListener(v -> presenter.onRemoveNeedlessSelectLettersClicked());
@@ -245,10 +243,6 @@ public class SingleplayerActivity extends AppCompatActivity implements Singlepla
 
         presenter.showCoinBalance();
         presenter.showCurrentCard();
-    }
-
-    private void initAds() {
-        presenter.initAds();
     }
 
     private void setWordLettersOnClickListeners() {

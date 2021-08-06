@@ -17,13 +17,12 @@ import ru.granby.tabukan.exception.AlreadyShownAllAssociationsException;
 import ru.granby.tabukan.exception.IncorrectCardIndexException;
 import ru.granby.tabukan.exception.NotEnoughBalanceException;
 import ru.granby.tabukan.exception.WordLettersAreFullException;
-import ru.granby.tabukan.localization.Localization;
+import ru.granby.tabukan.localization.Localizer;
 import ru.granby.tabukan.model.business.helpers.CardIndexHelper;
 import ru.granby.tabukan.model.business.helpers.CoinBalanceHelper;
 import ru.granby.tabukan.model.data.database.relations.game.Card;
-import ru.granby.tabukan.model.business.dto.singleplayer.CardAndLastAssociationIndexAndWordLettersAndSelectLetters;
-import ru.granby.tabukan.model.business.dto.singleplayer.CardAndWordLettersAndSelectLetters;
-import ru.granby.tabukan.model.business.dto.singleplayer.CoinBalanceAndCardIndex;
+import ru.granby.tabukan.model.business.dto.game.CardAndLastAssociationIndexAndWordLettersAndSelectLetters;
+import ru.granby.tabukan.model.business.dto.game.CardAndWordLettersAndSelectLetters;
 import ru.granby.tabukan.ui.base.BasePresenter;
 
 import static ru.granby.tabukan.ui.singleplayer.SingleplayerContract.BLANK_LETTER;
@@ -215,7 +214,7 @@ public class SingleplayerPresenter extends BasePresenter<SingleplayerContract.Vi
                         .flatMap(card -> {
                             //TODO: check coin balance
 
-                            String cardHeader = Localization.getInstance().getText(
+                            String cardHeader = Localizer.getInstance().localize(
                                     card.getHeader().getLocalizedText());
                             ArrayList<Character> selectLetters = new ArrayList<>();
                             for (int i = 0; i < cardHeader.length(); i++) {
@@ -329,10 +328,7 @@ public class SingleplayerPresenter extends BasePresenter<SingleplayerContract.Vi
                 Single.zip(
                         interactor.getCardsCount(),
                         interactor.getCurrentCardIndex(),
-                        (cardsCount, cardIndex) -> {
-                            cardIndex = CardIndexHelper.changeIndexTo(cardIndex + 1, cardsCount);
-                            return cardIndex;
-                        }
+                        (cardsCount, cardIndex) -> CardIndexHelper.changeIndexTo(cardIndex + 1, cardsCount)
                 ).subscribeOn(Schedulers.io())
                     .observeOn(Schedulers.io())
                         .flatMap(cardIndex ->
@@ -405,19 +401,19 @@ public class SingleplayerPresenter extends BasePresenter<SingleplayerContract.Vi
     }
 
     private void createBlankWordLettersList(Card card, List<Character> wordLetters) {
-        for (int i = 0; i < Localization.getInstance().getText(card.getHeader().getLocalizedText()).length(); i++) {
+        for (int i = 0; i < Localizer.getInstance().localize(card.getHeader().getLocalizedText()).length(); i++) {
             wordLetters.add(BLANK_LETTER);
         }
     }
 
     private void createSelectLettersList(Card card, List<Character> selectLetters) {
-        String cardHeader = Localization.getInstance().getText(card.getHeader().getLocalizedText());
+        String cardHeader = Localizer.getInstance().localize(card.getHeader().getLocalizedText());
 
         for (int i = 0; i < cardHeader.length(); i++) {
             selectLetters.add(cardHeader.charAt(i));
         }
 
-        char[] alphabetLetters = Localization.getInstance().getAlphabet();
+        char[] alphabetLetters = Localizer.getInstance().getAlphabet();
         for (int i = 0; i < SingleplayerContract.SELECT_LETTERS_COUNT - cardHeader.length(); i++) {
             selectLetters.add(alphabetLetters[new Random().nextInt(alphabetLetters.length)]);
         }
@@ -426,8 +422,8 @@ public class SingleplayerPresenter extends BasePresenter<SingleplayerContract.Vi
     }
 
     private boolean areWordLettersCorrect(List<Character> wordLetters, Card card) {
-        String cardHeader = Localization.getInstance()
-                .getText(card.getHeader().getLocalizedText())
+        String cardHeader = Localizer.getInstance()
+                .localize(card.getHeader().getLocalizedText())
                 .toLowerCase();
 
         for (int i = 0; i < wordLetters.size(); i++) {

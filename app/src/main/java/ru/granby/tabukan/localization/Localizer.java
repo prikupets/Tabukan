@@ -7,9 +7,9 @@ import lombok.Getter;
 import ru.granby.tabukan.App;
 import ru.granby.tabukan.model.data.database.entity.localization.Localized;
 
-public class Localization {
-    private static final String TAG = "~Localization";
-    private static Localization instance;
+public class Localizer {
+    private static final String TAG = "~Localizer";
+    private static Localizer instance;
 
     //TODO[priority=low]: check if the new lower case alphabet is correct
     public static final char[] RU_ALPHABET = {'а','б','в','г','д','е','ё','ж','з','и','й','к','л','м','н','о','п','р','с','т','у','ф','х','ц','ч','ш','щ','ъ','ы','ь','э','ю','я'};
@@ -25,7 +25,7 @@ public class Localization {
     @Getter
     private char[] alphabet;
 
-    public Localization(String currentLanguage) {
+    public Localizer(String currentLanguage) {
         switch(currentLanguage) {
             case "ru":
                 alphabet = RU_ALPHABET;
@@ -58,7 +58,7 @@ public class Localization {
         language = currentLanguage;
     }
 
-    public static Localization getInstance() {
+    public static Localizer getInstance() {
         if(instance == null) {
             Context context = App.getInstance();
 
@@ -68,14 +68,14 @@ public class Localization {
             } else {
                 currentLanguage = context.getResources().getConfiguration().locale.getLanguage();
             }
-            instance = new Localization(currentLanguage);
+            instance = new Localizer(currentLanguage);
             Log.i(TAG, "Set up Localization with language: " + currentLanguage);
         }
 
         return instance;
     }
 
-    public String getText(Localized localized) {
+    public String localize(Localized localized) {
         switch(language) {
             case "ru":
                 return localized.getRu();
