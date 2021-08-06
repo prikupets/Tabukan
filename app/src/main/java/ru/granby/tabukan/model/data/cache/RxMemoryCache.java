@@ -25,13 +25,6 @@ public class RxMemoryCache {
     }
 
     public <T> Completable set(String objectKey, T objectToSave, Completable saveCompletable) {
-//        if(cachedObjectsByKeys.containsKey(objectKey)) {
-//            Object cachedObject = cachedObjectsByKeys.get(objectKey);
-//            if (cachedObject == objectToSave) {
-//                return Completable.fromSupplier(() -> cachedObject);
-//            }
-//        }
-
         cachedObjectsByKeys.put(objectKey, objectToSave);
         return saveCompletable;
     }
