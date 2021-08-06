@@ -15,7 +15,7 @@
     <string name="ok">Окей</string>
     <string name="current_level">Уровень</string>
     <string name="not_enough_balance">Недостаточно монет</string>
-    <string name="no_more_levels_in_singleplayer">На данный момент уровней больше нет. Попробуйте мультиплеер!</string>
+    <string name="no_more_levels_in_singleplayer">На данный момент уровней больше нет. Попробуйте игру для компании!</string>
     <string name="tooltip_associations">Это ассоциации-подсказки</string>
     <string name="tooltip_hints">Здесь подсказки за монетки ↓</string>
     <string name="tooltip_word_letters">Угадай слово</string>
@@ -26,4 +26,6 @@
     <string name="payment_error">Произошла ошибка при оплате</string>
     <string name="get_coins_for_ads_button">Получить монеты</string>
     <string name="get_coins_for_ad">Посмотри рекламное видео и получи 35 монет бесплатно</string>
+    <string name="cards_loading_error">Произошла ошибка при загрузке карт</string>
+    <string name="no_more_levels_in_multiplayer">На данный момент уровней больше нет. Попробуйте одиночную игру!</string>
 </resources>

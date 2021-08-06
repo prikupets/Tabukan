@@ -18,6 +18,7 @@
     <string name="current_level">Level</string>
     <string name="not_enough_balance">Not enough balance</string>
     <string name="no_more_levels_in_singleplayer">No more levels at the moment. Try multiplayer!</string>
+    <string name="no_more_levels_in_multiplayer">No more levels at the moment. Try singleplayer!</string>
     <string name="tooltip_associations">These are associations-hints</string>
     <string name="tooltip_hints">Here are hints for coins ↓</string>
     <string name="tooltip_word_letters">Guess the word</string>
@@ -30,4 +31,5 @@
     <string name="get_coins_for_ad">Watch the promotional video and get 35 free coins</string>
     <string name="about_app_text">Author in VK: https://vk.com/granlovestea \nEmail: contact@granby.ru \nOpen source licenses: \n</string>
     <string name="about_app_title">About the application</string>
+    <string name="cards_loading_error">An error occurred while loading cards</string>
 </resources>

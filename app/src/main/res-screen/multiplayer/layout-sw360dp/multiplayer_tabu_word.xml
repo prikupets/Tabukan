@@ -9,7 +9,7 @@
     android:textAllCaps="true"
     android:textAlignment="center"
 
-    android:padding="@dimen/_6sdp"
+    android:padding="@dimen/_4sdp"
 
     android:layout_weight="1"
     />

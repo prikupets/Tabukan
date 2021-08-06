@@ -1,112 +1,118 @@
 package ru.granby.tabukan.ui.multiplayer;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.os.Bundle;
 import android.view.View;
 
-import com.google.android.gms.ads.AdRequest;
-import com.google.android.gms.ads.MobileAds;
+import androidx.appcompat.app.AppCompatActivity;
 
+import com.google.android.gms.ads.AdRequest;
+
+import org.greenrobot.eventbus.EventBus;
+
+import ru.granby.tabukan.R;
 import ru.granby.tabukan.databinding.MultiplayerActivityBinding;
-import ru.granby.tabukan.ui.multiplayer.deck.DeckViewPagerAdapter;
-import ru.granby.tabukan.ui.multiplayer.deck.pagetransformer.HorizontalFlip;
+import ru.granby.tabukan.model.business.interactor.MultiplayerInteractor;
+import ru.granby.tabukan.ui.multiplayer.cards.CardsViewPagerAdapter;
+import ru.granby.tabukan.ui.base.pagetransformer.HorizontalFlip;
+import ru.granby.tabukan.ui.multiplayer.cards.CardsViewPagerContract;
+import ru.granby.tabukan.utils.Toaster;
 
 public class MultiplayerActivity extends AppCompatActivity implements MultiplayerContract.View {
-    private MultiplayerContract.Presenter presenter;
+    private static final String TAG = "~MultiplayerActivity";
+    protected MultiplayerContract.Presenter presenter;
     private MultiplayerActivityBinding binding;
 
     @Override
-    public void showAd() {
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        binding = MultiplayerActivityBinding.inflate(getLayoutInflater());
+        View view = binding.getRoot();
+        setContentView(view);
 
+        if (presenter == null)
+            presenter = new MultiplayerPresenter();
+        presenter.bind(this, new MultiplayerInteractor());
+
+        setUpViews();
     }
 
     @Override
-    public void swipeNextCard() {
+    public void onResume() {
+        super.onResume();
 
+        if(!presenter.isViewBound()) {
+            presenter.bind(this, new MultiplayerInteractor());
+        }
+
+        setUpViewPager();
     }
 
     @Override
-    public void setOnNextCardClickedListener() {
-
-    }
-
-    @Override
-    public void setOnBackClickedListener() {
-
+    protected void onStop() {
+        super.onStop();
+        presenter.unbind();
     }
 
     @Override
     public void finishView() {
-
+        finish();
     }
 
-//    @Override
-//    protected void onCreate(Bundle savedInstanceState) {
-//        super.onCreate(savedInstanceState);
-//        binding = MultiplayerActivityBinding.inflate(getLayoutInflater());
-//        View view = binding.getRoot();
-//        setContentView(view);
-//
-//        if(presenter == null) {
-//            presenter = new MultiplayerPresenter();
-//        }
-//
-//        setUpViews();
-//    }
-//
-//    @Override
-//    protected void onStart() {
-//        super.onStart();
-//        presenter.attach(this);
-//        initAds();
-//    }
-//
-//    @Override
-//    protected void onStop() {
-//        super.onStop();
-//        presenter.detach();
-//    }
-//
-//    @Override
-//    public void setOnNextCardClickedListener() {
-//        binding.nextCard.setOnClickListener((v) -> presenter.onNextCardClicked());
-//    }
-//
-//    @Override
-//    public void showAd() {
-//        AdRequest adRequest = new AdRequest.Builder().build();
-//        binding.adBanner.loadAd(adRequest);
-//    }
-//
-//    @Override
-//    public void swipeNextCard() {
-//        binding.deckViewPager.setCurrentItem(binding.deckViewPager.getCurrentItem() + 1);
-//    }
-//
-//    private void setUpViews() {
-//        //setSupportActionBar(binding.toolbarWrapper.toolbar);
-//
-//        binding.deckViewPager.setAdapter(new DeckViewPagerAdapter(this));
-//        binding.deckViewPager.setPageTransformer(new HorizontalFlip());
-//
-//        setOnNextCardClickedListener();
-//        setOnBackClickedListener();
-//    }
-//
-//    private void initAds() {
-//        MobileAds.initialize(getApplicationContext(), initializationStatus -> { });
-//        presenter.initAds();
-//    }
-//
-//
-//    @Override
-//    public void setOnBackClickedListener() {
-//        binding.backButton.setOnClickListener((v) -> presenter.onBackClicked());
-//    }
-//
-//    @Override
-//    public void finishView() {
-//        finish();
-//    }
+    @Override
+    public void showAdBanner(AdRequest adRequest) {
+        binding.adBanner.loadAd(adRequest);
+    }
+
+    @Override
+    public void hideAds() {
+        binding.multiplayerRoot.removeView(binding.adBanner);
+    }
+
+    @Override
+    public void showCoinBalance(int coinBalance) {
+        binding.coinsButtonText.setText(String.valueOf(coinBalance));
+    }
+
+    @Override
+    public void showCurrentLevel(int level) {
+        binding.levelButtonText.setText(String.valueOf(level));
+    }
+
+    @Override
+    public void showCardsLoadingError() {
+        Toaster.showLongToast(this, getResources().getString(R.string.cards_loading_error));
+    }
+
+    @Override
+    public void unsetViewPager() {
+        binding.cardsViewPager.setAdapter(null);
+    }
+
+    @Override
+    public void showNoMoreLevelsDialog() {
+        //TODO: improve
+        Toaster.showShortToast(this, getResources().getString(R.string.no_more_levels_in_multiplayer));
+    }
+
+    private void setUpViews() {
+        presenter.initAds();
+
+        setUpViewPager();
+
+        binding.nextCardButtonBackground.setOnClickListener(v -> presenter.onNextCardClicked());
+        binding.backButtonBackground.setOnClickListener(v -> presenter.onBackClicked());
+        binding.guideButtonBackground.setOnClickListener(v -> presenter.onGuideClicked());
+
+        presenter.showCurrentLevel();
+        presenter.showCoinBalance();
+    }
+
+    private void setUpViewPager() {
+        CardsViewPagerAdapter cardsViewPagerAdapter = new CardsViewPagerAdapter(
+                this,
+                binding.cardsViewPager,
+                (CardsViewPagerContract.Interactor) presenter.getInteractor()
+        );
+        cardsViewPagerAdapter.setUpWhenReady();
+    }
 }
