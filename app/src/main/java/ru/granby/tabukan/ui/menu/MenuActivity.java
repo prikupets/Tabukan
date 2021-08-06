@@ -55,7 +55,7 @@ public class MenuActivity extends AppCompatActivity implements MenuContract.View
 
     @Override
     public void finishView() {
-
+        finish();
     }
 
     @Override
