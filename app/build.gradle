@@ -115,4 +115,7 @@ dependencies {
 
     // Konfetti
     implementation 'nl.dionsegijn:konfetti:1.3.2'
+
+    // LeakCanary
+    debugImplementation 'com.squareup.leakcanary:leakcanary-android:2.6'
 }
