@@ -493,7 +493,7 @@
     <nl.dionsegijn.konfetti.KonfettiView
         android:id="@+id/victory_confetti"
         android:layout_width="0dp"
-        android:layout_height="0dp"
+        android:layout_height="@dimen/_400sdp"
 
         app:layout_constraintStart_toStartOf="@id/word_letters_flow"
         app:layout_constraintEnd_toEndOf="@id/word_letters_flow"

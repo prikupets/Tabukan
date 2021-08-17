@@ -179,8 +179,8 @@ public class SingleplayerActivity extends AppCompatActivity implements Singlepla
                 .addColors(Color.YELLOW, Color.GREEN, Color.MAGENTA)
                 .setDirection(0, 359.0)
                 .setSpeed(1f, 5f)
+                .setTimeToLive(1L)
                 .setFadeOutEnabled(true)
-                .setTimeToLive(500L)
                 .addShapes(Shape.Square.INSTANCE, Shape.Circle.INSTANCE)
                 .addSizes(new Size(12, 6f))
                 .setPosition(binding.victoryConfetti.getWidth() / 2f,
