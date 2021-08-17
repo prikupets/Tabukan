@@ -15,6 +15,10 @@ import ru.granby.tabukan.exception.ImageDownloadingException;
 public class ImageDownloader {
     private static final String TAG = "~ImageDownloader";
 
+    private ImageDownloader() {
+        throw new IllegalStateException("Utility class");
+    }
+
     public static Single<Bitmap> download(String urlText) {
         return Single.fromCallable(() -> {
                     try {
