@@ -20,4 +20,10 @@ public class MultiplayerKey {
 
     public static final String CURRENT_CARD = "CURRENT_CARD" + SUFFIX;
 
+    public static final String CARDS_COUNT_AFTER_INTERSTITIAL_AD = "CARDS_AFTER_INTERSTITIAL_AD" + SUFFIX;
+    public static final int CARDS_COUNT_AFTER_INTERSTITIAL_AD_DEFAULT_VALUE = 1;
+
+    public static final String MAX_CARD_INDEX = "MAX_CARD_INDEX" + SUFFIX;
+    public static final int MAX_CARD_INDEX_DEFAULT_VALUE = 0;
+
 }

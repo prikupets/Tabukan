@@ -6,8 +6,8 @@ import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
 import io.reactivex.rxjava3.core.Completable;
 import io.reactivex.rxjava3.core.Single;
 import io.reactivex.rxjava3.schedulers.Schedulers;
-import ru.granby.tabukan.exception.AdsAlreadyRemovedException;
-import ru.granby.tabukan.exception.AdsRemovedException;
+import ru.granby.tabukan.exception.AdsAlreadyDisabledException;
+import ru.granby.tabukan.exception.AdsDisabledException;
 import ru.granby.tabukan.ui.base.BasePresenter;
 
 public class MenuPresenter extends BasePresenter<MenuContract.View, MenuContract.Interactor> implements MenuContract.Presenter {
@@ -38,15 +38,16 @@ public class MenuPresenter extends BasePresenter<MenuContract.View, MenuContract
     @Override
     public void initAds() {
         interactor.addDisposable(
-                interactor.isAdsRemoved()
+                interactor.isAdsEnabled()
                     .subscribeOn(Schedulers.io())
                     .observeOn(AndroidSchedulers.mainThread())
-                        .flatMap(adsRemoved -> {
-                            if(adsRemoved) {
+                        .flatMap(adsEnabled -> {
+                            if(adsEnabled) {
+                                return Single.just(adsEnabled);
+                            } else {
                                 view.hideAds();
-                                throw new AdsRemovedException("Ads removed, can't hide it");
+                                throw new AdsDisabledException("Ads disabled - shouldn't show it");
                             }
-                            return Single.just(adsRemoved);
                         })
                     .observeOn(Schedulers.io())
                         .flatMap(ignored -> interactor.getAdRequest())
@@ -54,7 +55,7 @@ public class MenuPresenter extends BasePresenter<MenuContract.View, MenuContract
                         .subscribe(
                                 view::showAdBanner,
                                 throwable -> {
-                                    if(!(throwable instanceof AdsRemovedException))
+                                    if(!(throwable instanceof AdsDisabledException))
                                         Log.e(TAG, "can't initAds: ", throwable);
                                 }
                         )
@@ -82,41 +83,44 @@ public class MenuPresenter extends BasePresenter<MenuContract.View, MenuContract
     }
 
     @Override
-    public void onRemoveAdsClicked() {
+    public void onDisableAdsClicked() {
         interactor.addDisposable(
-                interactor.isAdsRemoved()
+                interactor.isAdsEnabled()
                 .subscribeOn(Schedulers.io())
                 .observeOn(Schedulers.io())
-                    .flatMapCompletable(adsRemoved -> {
-                        if (adsRemoved) throw new AdsAlreadyRemovedException("Already removed ads");
-                        else return Completable.complete();
+                    .flatMapCompletable(adsEnabled -> {
+                        if (adsEnabled) {
+                            return Completable.complete();
+                        } else {
+                            throw new AdsAlreadyDisabledException("Already disabled ads");
+                        }
                     })
                 .observeOn(AndroidSchedulers.mainThread())
                     .subscribe(
-                        () -> view.showBuyRemoveAdsDialog(),
-                        (throwable) -> {
+                        () -> view.showBuyDisableAdsDialog(),
+                        throwable -> {
                             Log.e(TAG, "onRemoveAdsClicked: ", throwable);
-                            if(throwable instanceof AdsAlreadyRemovedException) view.showAdsAlreadyRemoved();
+                            if(throwable instanceof AdsAlreadyDisabledException) view.showAdsAlreadyRemoved();
                         })
         );
     }
 
     @Override
-    public void onRemoveAdsBought() {
+    public void onDisableAdsBought() {
         interactor.addDisposable(
-                interactor.setAdsRemoved(true)
+                interactor.setAdsEnabled(false)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                     .subscribe(() -> {
-                        Log.i(TAG, "removeAds bought");
-                        view.showRemoveAdsBought();
+                        Log.i(TAG, "disableAds bought");
+                        view.showDisableAdsBought();
                         view.hideAds();
                     })
         );
     }
 
     @Override
-    public void onRemoveAdsPaymentError() {
-        view.showRemoveAdsPaymentError();
+    public void onDisableAdsPaymentError() {
+        view.showDisableAdsPaymentError();
     }
 }

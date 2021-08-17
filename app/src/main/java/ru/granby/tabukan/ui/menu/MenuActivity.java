@@ -95,24 +95,24 @@ public class MenuActivity extends AppCompatActivity implements MenuContract.View
     }
 
     @Override
-    public void showBuyRemoveAdsDialog() {
+    public void showBuyDisableAdsDialog() {
         // TODO: make actual buy ads dialog using google play
 
         new AlertDialog.Builder(this)
-                .setPositiveButton("Buy", (dialog, id) -> presenter.onRemoveAdsBought())
-                .setNeutralButton("Fake error", (dialog, id) -> presenter.onRemoveAdsPaymentError())
+                .setPositiveButton("Buy", (dialog, id) -> presenter.onDisableAdsBought())
+                .setNeutralButton("Fake error", (dialog, id) -> presenter.onDisableAdsPaymentError())
                 .setNegativeButton("Cancel", (dialog, id) -> dialog.dismiss())
                 .create()
                 .show();
     }
 
     @Override
-    public void showRemoveAdsBought() {
+    public void showDisableAdsBought() {
         Toaster.showShortToast(this, getResources().getString(R.string.thanks_for_the_purchase));
     }
 
     @Override
-    public void showRemoveAdsPaymentError() {
+    public void showDisableAdsPaymentError() {
         Toaster.showLongToast(this, getResources().getString(R.string.payment_error));
     }
 
@@ -126,7 +126,7 @@ public class MenuActivity extends AppCompatActivity implements MenuContract.View
         binding.headerBackground.setOnClickListener(v -> presenter.onAboutAppClicked());
         binding.playMultiplayerButtonBackground.setOnClickListener(v -> presenter.onPlayMultiplayerClicked());
         binding.playSingleplayerButtonBackground.setOnClickListener(v -> presenter.onPlaySingleplayerClicked());
-        binding.removeAdsButtonBackground.setOnClickListener(v -> presenter.onRemoveAdsClicked());
+        binding.removeAdsButtonBackground.setOnClickListener(v -> presenter.onDisableAdsClicked());
         binding.storeButtonBackground.setOnClickListener(v -> presenter.onStoreClicked());
     }
 }

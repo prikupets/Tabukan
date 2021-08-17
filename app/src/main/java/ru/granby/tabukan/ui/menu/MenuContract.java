@@ -18,9 +18,9 @@ public interface MenuContract {
         void startSingleplayerActivity();
         void startStoreActivity();
         void showAdsAlreadyRemoved();
-        void showBuyRemoveAdsDialog();
-        void showRemoveAdsBought();
-        void showRemoveAdsPaymentError();
+        void showBuyDisableAdsDialog();
+        void showDisableAdsBought();
+        void showDisableAdsPaymentError();
         void hideAds();
     }
 
@@ -30,17 +30,17 @@ public interface MenuContract {
         void onPlayMultiplayerClicked();
         void onPlaySingleplayerClicked();
         void onStoreClicked();
-        void onRemoveAdsClicked();
-        void onRemoveAdsBought();
-        void onRemoveAdsPaymentError();
+        void onDisableAdsClicked();
+        void onDisableAdsBought();
+        void onDisableAdsPaymentError();
     }
 
     interface Interactor extends BaseContract.Interactor {
+        Single<Boolean> isAdsEnabled();
+        Completable setAdsEnabled(boolean state);
         Single<AdRequest> getAdRequest();
         Single<Boolean> isMenuFirstLaunch();
         Completable setMenuFirstLaunch(boolean state);
         Completable setDefaultCoinBalance();
-        Single<Boolean> isAdsRemoved();
-        Completable setAdsRemoved(boolean state);
     }
 }

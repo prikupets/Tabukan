@@ -19,6 +19,16 @@ import static ru.granby.tabukan.model.business.interactor.keys.MenuKey.FIRST_LAU
 public class MenuInteractor extends BaseInteractor implements MenuContract.Interactor {
     private static final String TAG = "~MenuInteractor";
 
+    @Override
+    public Single<Boolean> isAdsEnabled() {
+        return App.getInstance().getInteractor().isAdsEnabled();
+    }
+
+    @Override
+    public Completable setAdsEnabled(boolean state) {
+        return App.getInstance().getInteractor().setAdsEnabled(state);
+    }
+
     @Synchronized
     @Override
     public Single<AdRequest> getAdRequest() {
@@ -49,15 +59,5 @@ public class MenuInteractor extends BaseInteractor implements MenuContract.Inter
     @Override
     public Completable setDefaultCoinBalance() {
         return App.getInstance().getInteractor().setDefaultCoinBalance();
-    }
-
-    @Override
-    public Single<Boolean> isAdsRemoved() {
-        return App.getInstance().getInteractor().isAdsRemoved();
-    }
-
-    @Override
-    public Completable setAdsRemoved(boolean state) {
-        return App.getInstance().getInteractor().setAdsRemoved(state);
     }
 }

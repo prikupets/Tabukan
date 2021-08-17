@@ -1,6 +1,7 @@
 package ru.granby.tabukan.ui.singleplayer;
 
-import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.interstitial.InterstitialAd;
+import com.google.android.gms.ads.interstitial.InterstitialAdLoadCallback;
 
 import java.util.List;
 
@@ -19,11 +20,14 @@ public interface SingleplayerContract {
     int TEMP_TOOLTIPS_DURATION = 7000; // ms
     int DELAY_BEFORE_NEW_LEVEL = 500; // ms
     int LEVEL_REWARD = 50; // TODO: rethink
+    int CARDS_COUNT_TO_INTERSTITIAL_AD = 5;
 
     interface View extends BaseContract.View {
         void finishView();
-        void showAdBanner(AdRequest adRequest);
         void hideAds();
+        void loadInterstitialAd(InterstitialAdLoadCallback interstitialAdLoadCallback);
+        void showAdBanner();
+        void showInterstitialAd(InterstitialAd interstitialAd);
         void showCoinBalance(int coinBalance);
         void showCurrentLevel(int level);
         void showAssociation(int nextAssociationIndexToShow);
@@ -58,8 +62,10 @@ public interface SingleplayerContract {
     }
 
     interface Interactor extends BaseContract.Interactor {
-        Single<AdRequest> getAdRequest();
-        Single<Boolean> isAdsRemoved();
+        Single<Boolean> isAdsEnabled();
+        Single<Integer> getCardsCountAfterInterstitialAd();
+        Completable setCardsCountAfterInterstitialAd(int count);
+        Completable setDefaultCardsCountAfterInterstitialAd();
         Single<Boolean> isSingleplayerFirstLaunch();
         Completable setSingleplayerFirstLaunch(boolean state);
         Single<Integer> getCoinBalance();

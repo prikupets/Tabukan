@@ -1,11 +1,14 @@
 package ru.granby.tabukan.ui.multiplayer;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.interstitial.InterstitialAd;
+import com.google.android.gms.ads.interstitial.InterstitialAdLoadCallback;
 
 import org.greenrobot.eventbus.EventBus;
 
@@ -59,8 +62,24 @@ public class MultiplayerActivity extends AppCompatActivity implements Multiplaye
     }
 
     @Override
-    public void showAdBanner(AdRequest adRequest) {
-        binding.adBanner.loadAd(adRequest);
+    public void loadInterstitialAd(InterstitialAdLoadCallback interstitialAdLoadCallback) {
+        InterstitialAd.load(
+                this,
+                getResources().getString(R.string.interstitial_ad_unit_id),
+                new AdRequest.Builder().build(),
+                interstitialAdLoadCallback);
+    }
+
+    @Override
+    public void showAdBanner() {
+        Log.i(TAG, "Showing ad banner");
+        binding.adBanner.loadAd(new AdRequest.Builder().build());
+    }
+
+    @Override
+    public void showInterstitialAd(InterstitialAd interstitialAd) {
+        Log.i(TAG, "Showing interstitial ad");
+        interstitialAd.show(this);
     }
 
     @Override

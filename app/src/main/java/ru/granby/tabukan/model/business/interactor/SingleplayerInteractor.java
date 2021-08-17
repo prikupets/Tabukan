@@ -1,12 +1,8 @@
 package ru.granby.tabukan.model.business.interactor;
 
-import com.google.android.gms.ads.AdRequest;
-import com.google.android.gms.ads.MobileAds;
-import com.google.android.gms.ads.RequestConfiguration;
 import com.google.gson.reflect.TypeToken;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 import io.reactivex.rxjava3.core.Completable;
@@ -18,21 +14,45 @@ import ru.granby.tabukan.model.data.database.relations.game.Card;
 import ru.granby.tabukan.model.data.sharedpreferences.SharedPreferencesManager;
 import ru.granby.tabukan.ui.singleplayer.SingleplayerContract;
 
-import static ru.granby.tabukan.model.business.interactor.keys.SingleplayerKey.*;
+import static ru.granby.tabukan.model.business.interactor.keys.SingleplayerKey.CARD;
+import static ru.granby.tabukan.model.business.interactor.keys.SingleplayerKey.CARDS_COUNT_AFTER_INTERSTITIAL_AD;
+import static ru.granby.tabukan.model.business.interactor.keys.SingleplayerKey.CARDS_COUNT_AFTER_INTERSTITIAL_AD_DEFAULT;
+import static ru.granby.tabukan.model.business.interactor.keys.SingleplayerKey.CARDS_COUNT;
+import static ru.granby.tabukan.model.business.interactor.keys.SingleplayerKey.CURRENT_CARD;
+import static ru.granby.tabukan.model.business.interactor.keys.SingleplayerKey.CURRENT_CARD_INDEX;
+import static ru.granby.tabukan.model.business.interactor.keys.SingleplayerKey.CURRENT_CARD_INDEX_DEFAULT_VALUE;
+import static ru.granby.tabukan.model.business.interactor.keys.SingleplayerKey.CURRENT_SELECT_LETTERS;
+import static ru.granby.tabukan.model.business.interactor.keys.SingleplayerKey.CURRENT_SELECT_LETTERS_DEFAULT_VALUE;
+import static ru.granby.tabukan.model.business.interactor.keys.SingleplayerKey.CURRENT_WORD_LETTERS;
+import static ru.granby.tabukan.model.business.interactor.keys.SingleplayerKey.CURRENT_WORD_LETTERS_DEFAULT_VALUE;
+import static ru.granby.tabukan.model.business.interactor.keys.SingleplayerKey.FIRST_LAUNCH;
+import static ru.granby.tabukan.model.business.interactor.keys.SingleplayerKey.FIRST_LAUNCH_DEFAULT_VALUE;
+import static ru.granby.tabukan.model.business.interactor.keys.SingleplayerKey.LAST_ASSOCIATION_INDEX;
+import static ru.granby.tabukan.model.business.interactor.keys.SingleplayerKey.LAST_ASSOCIATION_INDEX_DEFAULT_VALUE;
 
 public class SingleplayerInteractor extends BaseInteractor implements SingleplayerContract.Interactor {
     private static final String TAG = "~SingleplayerInteractor";
 
-    @Synchronized
     @Override
-    public Single<AdRequest> getAdRequest() {
-        return Single.fromCallable(() -> {
-            RequestConfiguration configuration = new RequestConfiguration.Builder()
-                    .setTestDeviceIds(Collections.singletonList(AdRequest.DEVICE_ID_EMULATOR))
-                    .build();
-            MobileAds.setRequestConfiguration(configuration);
-            return new AdRequest.Builder().build();
-        });
+    public Single<Boolean> isAdsEnabled() {
+        return App.getInstance().getInteractor().isAdsEnabled();
+    }
+
+    @Override
+    public Single<Integer> getCardsCountAfterInterstitialAd() {
+        return get(CARDS_COUNT_AFTER_INTERSTITIAL_AD, SharedPreferencesManager.getInstance()
+                .getInt(CARDS_COUNT_AFTER_INTERSTITIAL_AD, CARDS_COUNT_AFTER_INTERSTITIAL_AD_DEFAULT));
+    }
+
+    @Override
+    public Completable setCardsCountAfterInterstitialAd(int count) {
+        return set(CARDS_COUNT_AFTER_INTERSTITIAL_AD, count, SharedPreferencesManager.getInstance()
+                .putInt(CARDS_COUNT_AFTER_INTERSTITIAL_AD, count));
+    }
+
+    @Override
+    public Completable setDefaultCardsCountAfterInterstitialAd() {
+        return setCardsCountAfterInterstitialAd(CARDS_COUNT_AFTER_INTERSTITIAL_AD_DEFAULT);
     }
 
     @Synchronized
@@ -148,10 +168,5 @@ public class SingleplayerInteractor extends BaseInteractor implements Singleplay
     public Completable setCurrentSelectLetters(List<Character> selectLetters) {
         return set(CURRENT_SELECT_LETTERS, selectLetters, SharedPreferencesManager.getInstance()
                 .putObject(CURRENT_SELECT_LETTERS, selectLetters));
-    }
-
-    @Override
-    public Single<Boolean> isAdsRemoved() {
-        return App.getInstance().getInteractor().isAdsRemoved();
     }
 }

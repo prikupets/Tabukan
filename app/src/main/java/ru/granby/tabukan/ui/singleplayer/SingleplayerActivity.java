@@ -4,6 +4,7 @@ import android.graphics.Color;
 import android.graphics.drawable.TransitionDrawable;
 import android.os.Bundle;
 import android.os.Handler;
+import android.util.Log;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationSet;
@@ -14,6 +15,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.content.res.AppCompatResources;
 
 import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.interstitial.InterstitialAd;
+import com.google.android.gms.ads.interstitial.InterstitialAdLoadCallback;
 
 import java.util.List;
 
@@ -64,13 +67,36 @@ public class SingleplayerActivity extends AppCompatActivity implements Singlepla
     }
 
     @Override
-    public void showAdBanner(AdRequest adRequest) {
-        binding.adBanner.loadAd(adRequest);
+    protected void onDestroy() {
+        super.onDestroy();
+        hideAds();
+    }
+
+    @Override
+    public void loadInterstitialAd(InterstitialAdLoadCallback interstitialAdLoadCallback) {
+        InterstitialAd.load(
+                this,
+                getResources().getString(R.string.interstitial_ad_unit_id),
+                new AdRequest.Builder().build(),
+                interstitialAdLoadCallback);
+    }
+
+    @Override
+    public void showAdBanner() {
+        Log.i(TAG, "Showing ad banner");
+        binding.adBanner.loadAd(new AdRequest.Builder().build());
+    }
+
+    @Override
+    public void showInterstitialAd(InterstitialAd interstitialAd) {
+        Log.i(TAG, "Showing interstitial ad");
+        interstitialAd.show(this);
     }
 
     @Override
     public void hideAds() {
         binding.singleplayerRoot.removeView(binding.adBanner);
+        binding.adBanner.destroy();
     }
 
     @Override
@@ -103,7 +129,7 @@ public class SingleplayerActivity extends AppCompatActivity implements Singlepla
 
     @Override
     public void showAllAssociations() {
-    showAssociationsUpTo(binding.associations.getReferencedIds().length - 1);
+        showAssociationsUpTo(binding.associations.getReferencedIds().length - 1);
     }
 
     @Override

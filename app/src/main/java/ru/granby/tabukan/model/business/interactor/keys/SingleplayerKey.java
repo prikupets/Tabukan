@@ -26,4 +26,7 @@ public class SingleplayerKey {
 
     public static final String CURRENT_WORD_LETTERS = "CURRENT_WORD_LETTERS" + SUFFIX;
     public static final List<Character> CURRENT_WORD_LETTERS_DEFAULT_VALUE = new ArrayList<>();
+
+    public static final String CARDS_COUNT_AFTER_INTERSTITIAL_AD = "CARDS_AFTER_INTERSTITIAL_AD" + SUFFIX;
+    public static final int CARDS_COUNT_AFTER_INTERSTITIAL_AD_DEFAULT = 1;
 }

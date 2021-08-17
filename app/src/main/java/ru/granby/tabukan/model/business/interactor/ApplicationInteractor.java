@@ -5,8 +5,8 @@ import io.reactivex.rxjava3.core.Single;
 import lombok.Synchronized;
 import ru.granby.tabukan.model.data.sharedpreferences.SharedPreferencesManager;
 
-import static ru.granby.tabukan.model.business.interactor.keys.ApplicationKey.ADS_REMOVED;
-import static ru.granby.tabukan.model.business.interactor.keys.ApplicationKey.ADS_REMOVED_DEFAULT;
+import static ru.granby.tabukan.model.business.interactor.keys.ApplicationKey.ADS_ENABLED;
+import static ru.granby.tabukan.model.business.interactor.keys.ApplicationKey.ADS_ENABLED_DEFAULT;
 import static ru.granby.tabukan.model.business.interactor.keys.ApplicationKey.COIN_BALANCE;
 import static ru.granby.tabukan.model.business.interactor.keys.ApplicationKey.COIN_BALANCE_DEFAULT_VALUE;
 
@@ -30,14 +30,14 @@ public class ApplicationInteractor extends BaseInteractor {
     }
 
     @Synchronized
-    public Single<Boolean> isAdsRemoved() {
-        return get(ADS_REMOVED, SharedPreferencesManager.getInstance()
-                .getBoolean(ADS_REMOVED, ADS_REMOVED_DEFAULT));
+    public Single<Boolean> isAdsEnabled() {
+        return get(ADS_ENABLED, SharedPreferencesManager.getInstance()
+                .getBoolean(ADS_ENABLED, ADS_ENABLED_DEFAULT));
     }
 
     @Synchronized
-    public Completable setAdsRemoved(boolean state) {
-        return set(ADS_REMOVED, state, SharedPreferencesManager.getInstance()
-                .putBoolean(ADS_REMOVED, state));
+    public Completable setAdsEnabled(boolean state) {
+        return set(ADS_ENABLED, state, SharedPreferencesManager.getInstance()
+                .putBoolean(ADS_ENABLED, state));
     }
 }

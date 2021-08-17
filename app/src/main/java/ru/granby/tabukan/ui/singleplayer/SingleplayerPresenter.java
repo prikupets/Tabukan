@@ -2,6 +2,16 @@ package ru.granby.tabukan.ui.singleplayer;
 
 import android.util.Log;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.LoadAdError;
+import com.google.android.gms.ads.MobileAds;
+import com.google.android.gms.ads.RequestConfiguration;
+import com.google.android.gms.ads.interstitial.InterstitialAd;
+import com.google.android.gms.ads.interstitial.InterstitialAdLoadCallback;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -11,71 +21,78 @@ import java.util.concurrent.TimeUnit;
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
 import io.reactivex.rxjava3.core.Completable;
 import io.reactivex.rxjava3.core.Single;
+import io.reactivex.rxjava3.functions.Action;
 import io.reactivex.rxjava3.schedulers.Schedulers;
-import ru.granby.tabukan.exception.AdsRemovedException;
+import ru.granby.tabukan.exception.AdsDisabledException;
 import ru.granby.tabukan.exception.AlreadyShownAllAssociationsException;
 import ru.granby.tabukan.exception.IncorrectCardIndexException;
 import ru.granby.tabukan.exception.NotEnoughBalanceException;
 import ru.granby.tabukan.exception.WordLettersAreFullException;
 import ru.granby.tabukan.localization.Localizer;
+import ru.granby.tabukan.model.business.dto.game.CardAndLastAssociationIndexAndWordLettersAndSelectLetters;
+import ru.granby.tabukan.model.business.dto.game.CardAndWordLettersAndSelectLetters;
+import ru.granby.tabukan.model.business.dto.game.CardIndexAndCardsCountAfterInterstitialAd;
 import ru.granby.tabukan.model.business.helpers.CardIndexHelper;
 import ru.granby.tabukan.model.business.helpers.CoinBalanceHelper;
 import ru.granby.tabukan.model.data.database.relations.game.Card;
-import ru.granby.tabukan.model.business.dto.game.CardAndLastAssociationIndexAndWordLettersAndSelectLetters;
-import ru.granby.tabukan.model.business.dto.game.CardAndWordLettersAndSelectLetters;
 import ru.granby.tabukan.ui.base.BasePresenter;
 
+import static ru.granby.tabukan.ui.singleplayer.SingleplayerContract.*;
 import static ru.granby.tabukan.ui.singleplayer.SingleplayerContract.BLANK_LETTER;
 
-public class SingleplayerPresenter extends BasePresenter<SingleplayerContract.View, SingleplayerContract.Interactor> implements SingleplayerContract.Presenter {
-
+public class SingleplayerPresenter extends BasePresenter<View, Interactor> implements Presenter {
     private static final String TAG = "~SingleplayerPresenter";
 
+    @Nullable
+    private InterstitialAd interstitialAd;
+
     @Override
-    public void bind(SingleplayerContract.View view, SingleplayerContract.Interactor interactor) {
+    public void bind(View view, Interactor interactor) {
         super.bind(view, interactor);
 
         interactor.addDisposable(
                 interactor.isSingleplayerFirstLaunch()
-                    .subscribeOn(Schedulers.io())
-                    .observeOn(AndroidSchedulers.mainThread())
-                        .map(result -> {
-                            if(result) showTempTooltips();
-                            return result;
-                        })
-                    .observeOn(Schedulers.io())
-                        .flatMapCompletable(result -> result ? interactor.setSingleplayerFirstLaunch(false) : Completable.complete())
-                    .observeOn(AndroidSchedulers.mainThread())
-                        .subscribe(
-                            () -> {},
-                            (throwable) -> Log.e(TAG, "can't isSingleplayerFirstLaunch: ", throwable)
-                        )
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                    .map(result -> {
+                        if(result) showTempTooltips();
+                        return result;
+                    })
+                .observeOn(Schedulers.io())
+                    .flatMapCompletable(result -> result ? interactor.setSingleplayerFirstLaunch(false) : Completable.complete())
+                .observeOn(AndroidSchedulers.mainThread())
+                    .subscribe(
+                        () -> {},
+                        throwable -> Log.e(TAG, "can't isSingleplayerFirstLaunch: ", throwable)
+                    )
         );
     }
 
     @Override
     public void initAds() {
         interactor.addDisposable(
-                interactor.isAdsRemoved()
-                        .subscribeOn(Schedulers.io())
-                        .observeOn(AndroidSchedulers.mainThread())
-                        .flatMap(adsRemoved -> {
-                            if(adsRemoved) {
-                                view.hideAds();
-                                throw new AdsRemovedException("Ads removed, can't hide it");
+                interactor.isAdsEnabled()
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                    .flatMapCompletable(adsEnabled -> {
+                        if(adsEnabled) {
+                            return Completable.complete();
+                        } else {
+                            view.hideAds();
+                            throw new AdsDisabledException("Ads disabled - shouldn't show it");
+                        }
+                    })
+                .observeOn(AndroidSchedulers.mainThread())
+                    .subscribe(
+                            () -> {
+                                initAdsConfiguration();
+                                view.showAdBanner();
+                            },
+                            throwable -> {
+                                if(!(throwable instanceof AdsDisabledException))
+                                    Log.e(TAG, "can't initAds: ", throwable);
                             }
-                            return Single.just(adsRemoved);
-                        })
-                        .observeOn(Schedulers.io())
-                        .flatMap(ignored -> interactor.getAdRequest())
-                        .observeOn(AndroidSchedulers.mainThread())
-                        .subscribe(
-                                view::showAdBanner,
-                                throwable -> {
-                                    if(!(throwable instanceof AdsRemovedException))
-                                        Log.e(TAG, "can't initAds: ", throwable);
-                                }
-                        )
+                    )
         );
     }
 
@@ -92,7 +109,7 @@ public class SingleplayerPresenter extends BasePresenter<SingleplayerContract.Vi
                 .observeOn(AndroidSchedulers.mainThread())
                     .subscribe(
                         view::showCoinBalance,
-                        (throwable) -> Log.e(TAG, "can't showCoinBalance: ", throwable)
+                        throwable -> Log.e(TAG, "can't showCoinBalance: ", throwable)
                     )
         );
     }
@@ -101,12 +118,12 @@ public class SingleplayerPresenter extends BasePresenter<SingleplayerContract.Vi
     public void showCurrentCard() {
         interactor.addDisposable(
                 interactor.getCurrentCardIndex()
-                    .subscribeOn(Schedulers.io())
-                    .observeOn(AndroidSchedulers.mainThread())
-                        .subscribe(
-                            this::showCard,
-                            (throwable) -> Log.e(TAG, "can't getCurrentCardIndex: ", throwable)
-                        )
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                    .subscribe(
+                        this::showCard,
+                        throwable -> Log.e(TAG, "can't getCurrentCardIndex: ", throwable)
+                    )
         );
     }
 
@@ -141,7 +158,7 @@ public class SingleplayerPresenter extends BasePresenter<SingleplayerContract.Vi
                     .subscribe((dto) -> {
                         view.showWordLetters(dto.getWordLetters());
                         view.showSelectLetters(dto.getSelectLetters());
-                    }, (throwable -> Log.e(TAG, "can't handle onWordLetterClicked", throwable)))
+                    }, throwable -> Log.e(TAG, "can't handle onWordLetterClicked", throwable))
         );
     }
 
@@ -191,7 +208,7 @@ public class SingleplayerPresenter extends BasePresenter<SingleplayerContract.Vi
                             } else {
                                 view.showWordIsIncorrect();
                             }
-                        }, (throwable) -> {
+                        }, throwable -> {
                             if (throwable instanceof WordLettersAreFullException)
                                 Log.d(TAG, "didn't finish onSelectLetterClicked: wordLetters are full");
                             else Log.e(TAG, "can't handle onSelectLetterClicked", throwable);
@@ -209,34 +226,35 @@ public class SingleplayerPresenter extends BasePresenter<SingleplayerContract.Vi
     public void onRemoveNeedlessSelectLettersClicked() {
         interactor.addDisposable(
                 interactor.getCurrentCard()
-                    .subscribeOn(Schedulers.io())
-                    .observeOn(Schedulers.io())
-                        .flatMap(card -> {
-                            //TODO: check coin balance
+                .subscribeOn(Schedulers.io())
+                .observeOn(Schedulers.io())
+                    .flatMap(card -> {
+                        //TODO: check coin balance
 
-                            String cardHeader = Localizer.getInstance().localize(
-                                    card.getHeader().getLocalizedText());
-                            ArrayList<Character> selectLetters = new ArrayList<>();
-                            for (int i = 0; i < cardHeader.length(); i++) {
-                                selectLetters.add(cardHeader.charAt(i));
-                            }
-                            Collections.shuffle(selectLetters);
+                        String cardHeader = Localizer.getInstance().localize(
+                                card.getHeader().getLocalizedText());
 
-                            List<Character> wordLetters = new ArrayList<>();
-                            createBlankWordLettersList(card, wordLetters);
+                        ArrayList<Character> selectLetters = new ArrayList<>();
+                        for (int i = 0; i < cardHeader.length(); i++) {
+                            selectLetters.add(cardHeader.charAt(i));
+                        }
+                        Collections.shuffle(selectLetters);
 
-                            return Completable.mergeArray(
-                                    interactor.setCurrentSelectLetters(selectLetters),
-                                    interactor.setCurrentWordLetters(wordLetters)
-                            ).andThen(Single.just(selectLetters));
-                        })
-                    .observeOn(AndroidSchedulers.mainThread())
-                        .subscribe((selectLetters) -> {
-                                view.showBlankWordLetters();
-                                view.showSelectLetters(selectLetters);
-                                view.setGameUiClickable(true);
-                            }, (throwable -> Log.e(TAG, "can't onRemoveNeedlessSelectLettersClicked", throwable))
-                        )
+                        List<Character> wordLetters = new ArrayList<>();
+                        createBlankWordLettersList(card, wordLetters);
+
+                        return Completable.mergeArray(
+                                interactor.setCurrentSelectLetters(selectLetters),
+                                interactor.setCurrentWordLetters(wordLetters)
+                        ).andThen(Single.just(selectLetters));
+                    })
+                .observeOn(AndroidSchedulers.mainThread())
+                    .subscribe((selectLetters) -> {
+                            view.showBlankWordLetters();
+                            view.showSelectLetters(selectLetters);
+                            view.setGameUiClickable(true);
+                        }, (throwable -> Log.e(TAG, "can't onRemoveNeedlessSelectLettersClicked", throwable))
+                    )
         );
     }
 
@@ -263,9 +281,9 @@ public class SingleplayerPresenter extends BasePresenter<SingleplayerContract.Vi
                 .observeOn(AndroidSchedulers.mainThread())
                     .subscribe(nextAssociationIndexToShow -> {
                                view.showAssociation(nextAssociationIndexToShow);
-                               if(nextAssociationIndexToShow + 1 > SingleplayerContract.ASSOCIATION_INDEX_TO_HIDE_TOOLTIPS) view.hideTooltips();
+                               if(nextAssociationIndexToShow + 1 > ASSOCIATION_INDEX_TO_HIDE_TOOLTIPS) view.hideTooltips();
                             },
-                        (throwable) -> {
+                            throwable -> {
                             if(throwable instanceof AlreadyShownAllAssociationsException)
                                 Log.d(TAG, "didn't finish onNextAssociationClicked: already shown all associations");
                             else
@@ -280,7 +298,7 @@ public class SingleplayerPresenter extends BasePresenter<SingleplayerContract.Vi
                 interactor.getCoinBalance()
                 .subscribeOn(Schedulers.io())
                 .observeOn(Schedulers.io())
-                    .map((coinBalance) -> CoinBalanceHelper.deposit(coinBalance, SingleplayerContract.LEVEL_REWARD))
+                    .map(coinBalance -> CoinBalanceHelper.deposit(coinBalance, LEVEL_REWARD))
                     .flatMap(newCoinBalance ->
                             interactor.setCoinBalance(newCoinBalance)
                                     .andThen(Single.just(newCoinBalance)))
@@ -301,7 +319,7 @@ public class SingleplayerPresenter extends BasePresenter<SingleplayerContract.Vi
                 interactor.getCoinBalance()
                 .subscribeOn(Schedulers.io())
                 .observeOn(Schedulers.io())
-                    .map(coinBalance -> CoinBalanceHelper.withdraw(coinBalance, SingleplayerContract.SKIP_CARD_PRICE))
+                    .map(coinBalance -> CoinBalanceHelper.withdraw(coinBalance, SKIP_CARD_PRICE))
                     .flatMap(newCoinBalance ->
                             interactor.setCoinBalance(newCoinBalance)
                             .andThen(Single.just(newCoinBalance)))
@@ -330,19 +348,32 @@ public class SingleplayerPresenter extends BasePresenter<SingleplayerContract.Vi
                         interactor.getCurrentCardIndex(),
                         (cardsCount, cardIndex) -> CardIndexHelper.changeIndexTo(cardIndex + 1, cardsCount)
                 ).subscribeOn(Schedulers.io())
-                    .observeOn(Schedulers.io())
-                        .flatMap(cardIndex ->
-                                Completable.mergeArray(
-                                        interactor.setCurrentCardIndex(cardIndex),
-                                        interactor.setLastAssociationIndex(0),
-                                        interactor.setCurrentWordLetters(new ArrayList<>()),
-                                        interactor.setCurrentSelectLetters(new ArrayList<>())
-                                ).andThen(Single.just(cardIndex))
-                        )
-                    .observeOn(AndroidSchedulers.mainThread())
-                        .subscribe(
-                            this::showCard,
-                            (throwable) -> {
+                .observeOn(Schedulers.io())
+                    .flatMap(cardIndex ->
+                            Completable.mergeArray(
+                                    interactor.setCurrentCardIndex(cardIndex),
+                                    interactor.setLastAssociationIndex(0),
+                                    interactor.setCurrentWordLetters(new ArrayList<>()),
+                                    interactor.setCurrentSelectLetters(new ArrayList<>())
+                            ).andThen(Single.just(cardIndex))
+                    )
+                    .zipWith(
+                        interactor.getCardsCountAfterInterstitialAd(),
+                        CardIndexAndCardsCountAfterInterstitialAd::new)
+                .observeOn(AndroidSchedulers.mainThread())
+                    .subscribe(
+                            dto -> {
+                                doIfAdsEnabled(() -> {
+                                    if(dto.getCardsCountAfterInterstitialAd() >= CARDS_COUNT_TO_INTERSTITIAL_AD) {
+                                        tryShowInterstitialAd();
+                                    } else {
+                                        addCardsCountAfterInterstitialAds();
+                                    }
+                                });
+
+                                showCard(dto.getCardIndex());
+                            },
+                            throwable -> {
                                 if(throwable instanceof IncorrectCardIndexException) {
                                     Log.i(TAG, "onSkipCardClicked: incorrect card index");
                                     view.showNoMoreLevelsDialog();
@@ -350,11 +381,17 @@ public class SingleplayerPresenter extends BasePresenter<SingleplayerContract.Vi
                                     Log.e(TAG, "can't skip card: ", throwable);
                                 }
                             }
-                        )
+                    )
         );
     }
 
     private void showCard(int cardIndex) {
+        doIfAdsEnabled(() -> {
+            if(interstitialAd == null) {
+                loadInterstitialAd(false);
+            }
+        });
+
         interactor.addDisposable(
                 Single.zip(
                         interactor.getCardByIndex(cardIndex),
@@ -383,19 +420,20 @@ public class SingleplayerPresenter extends BasePresenter<SingleplayerContract.Vi
 
                         return Single.just(dto);
                     })
-                    .flatMap((dto) ->
+                    .flatMap(dto ->
                         interactor.setCurrentCard()
                             .andThen(Single.just(dto))
                     )
                 .observeOn(AndroidSchedulers.mainThread())
-                    .subscribe((dto -> {
+                    .subscribe(dto -> {
                             view.setUpAssociations(dto.getCard().getAssociations());
                             view.showAssociationsUpTo(dto.getLastAssociationIndex());
                             view.showCurrentLevel(cardIndex + 1);
                             view.showWordLetters(dto.getWordLetters());
                             view.showSelectLetters(dto.getSelectLetters());
                             view.setGameUiClickable(true);
-                    }), (throwable) -> Log.e(TAG, "can't showCard: ", throwable)
+                    },
+                    throwable -> Log.e(TAG, "can't showCard: ", throwable)
                 )
         );
     }
@@ -414,7 +452,7 @@ public class SingleplayerPresenter extends BasePresenter<SingleplayerContract.Vi
         }
 
         char[] alphabetLetters = Localizer.getInstance().getAlphabet();
-        for (int i = 0; i < SingleplayerContract.SELECT_LETTERS_COUNT - cardHeader.length(); i++) {
+        for (int i = 0; i < SELECT_LETTERS_COUNT - cardHeader.length(); i++) {
             selectLetters.add(alphabetLetters[new Random().nextInt(alphabetLetters.length)]);
         }
 
@@ -438,9 +476,83 @@ public class SingleplayerPresenter extends BasePresenter<SingleplayerContract.Vi
     private void showTempTooltips() {
         view.showTooltips();
         interactor.addDisposable(Completable.complete()
-                .delay(SingleplayerContract.TEMP_TOOLTIPS_DURATION, TimeUnit.MILLISECONDS)
+                .delay(TEMP_TOOLTIPS_DURATION, TimeUnit.MILLISECONDS)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(() -> view.hideTooltips()));
+    }
+
+    private void initAdsConfiguration() {
+        RequestConfiguration configuration = new RequestConfiguration.Builder()
+                .setTestDeviceIds(Collections.singletonList(AdRequest.DEVICE_ID_EMULATOR))
+                .build();
+        MobileAds.setRequestConfiguration(configuration);
+    }
+
+    private void loadInterstitialAd(boolean showOnLoad) {
+        view.loadInterstitialAd(new InterstitialAdLoadCallback() {
+            @Override
+            public void onAdLoaded(@NonNull InterstitialAd loadedInterstitialAd) {
+                Log.i(TAG, "loadInterstitialAd: onAdLoaded");
+                interstitialAd = loadedInterstitialAd;
+                if(showOnLoad) {
+                    tryShowInterstitialAd();
+                }
+            }
+
+            @Override
+            public void onAdFailedToLoad(@NonNull LoadAdError loadAdError) {
+                Log.w(TAG, "loadInterstitialAd: onAdFailedToLoad: " + loadAdError.getMessage());
+                interstitialAd = null;
+            }
+        });
+    }
+
+    private void tryShowInterstitialAd() {
+        if(interstitialAd == null) {
+            loadInterstitialAd(true);
+        } else {
+            resetCardsCountAfterInterstitialAds();
+            view.showInterstitialAd(interstitialAd);
+            interstitialAd = null;
+        }
+    }
+
+    private void addCardsCountAfterInterstitialAds() {
+        interactor.addDisposable(
+                interactor.getCardsCountAfterInterstitialAd()
+                .subscribeOn(Schedulers.io())
+                .observeOn(Schedulers.io())
+                    .flatMapCompletable(cardsCount ->
+                            interactor.setCardsCountAfterInterstitialAd(cardsCount + 1))
+                .observeOn(AndroidSchedulers.mainThread())
+                    .subscribe(
+                            () -> {},
+                            throwable -> Log.e(TAG, "Can't addCardsCountAfterInterstitialAds", throwable))
+        );
+    }
+
+    private void resetCardsCountAfterInterstitialAds() {
+        interactor.addDisposable(
+                interactor.setDefaultCardsCountAfterInterstitialAd()
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                    .subscribe(
+                            () -> {},
+                            throwable -> Log.e(TAG, "Can't resetCardsCountAfterInterstitialAds", throwable))
+        );
+    }
+
+    private void doIfAdsEnabled(Action action) {
+        interactor.addDisposable(
+                interactor.isAdsEnabled()
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                    .subscribe(adsEnabled -> {
+                        if(adsEnabled) {
+                            action.run();
+                        }
+                    }, throwable -> Log.e(TAG, "doIfAdsEnabled: ", throwable))
+        );
     }
 }
