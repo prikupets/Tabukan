@@ -28,5 +28,8 @@ public class SingleplayerKey {
     public static final List<Character> CURRENT_WORD_LETTERS_DEFAULT_VALUE = new ArrayList<>();
 
     public static final String CARDS_COUNT_AFTER_INTERSTITIAL_AD = "CARDS_AFTER_INTERSTITIAL_AD" + SUFFIX;
-    public static final int CARDS_COUNT_AFTER_INTERSTITIAL_AD_DEFAULT = 1;
+    public static final int CARDS_COUNT_AFTER_INTERSTITIAL_AD_DEFAULT_VALUE = 1;
+
+    public static final String REMOVE_NEEDLESS_SELECT_LETTERS_USED = "REMOVE_NEEDLESS_SELECT_LETTERS_USED";
+    public static final boolean REMOVE_NEEDLESS_SELECT_LETTERS_USED_DEFAULT_VALUE = false;
 }

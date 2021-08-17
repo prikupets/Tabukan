@@ -256,6 +256,11 @@ public class SingleplayerActivity extends AppCompatActivity implements Singlepla
         binding.skipCardButtonBackground.setClickable(clickable);
     }
 
+    @Override
+    public void setRemoveNeedlessSelectLettersClickable(boolean clickable) {
+        binding.removeNeedlessSelectLettersButtonBackground.setClickable(clickable);
+    }
+
     private void setUpViews() {
         presenter.initAds();
 

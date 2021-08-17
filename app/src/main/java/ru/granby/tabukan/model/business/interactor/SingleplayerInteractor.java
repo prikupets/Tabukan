@@ -15,9 +15,9 @@ import ru.granby.tabukan.model.data.sharedpreferences.SharedPreferencesManager;
 import ru.granby.tabukan.ui.singleplayer.SingleplayerContract;
 
 import static ru.granby.tabukan.model.business.interactor.keys.SingleplayerKey.CARD;
-import static ru.granby.tabukan.model.business.interactor.keys.SingleplayerKey.CARDS_COUNT_AFTER_INTERSTITIAL_AD;
-import static ru.granby.tabukan.model.business.interactor.keys.SingleplayerKey.CARDS_COUNT_AFTER_INTERSTITIAL_AD_DEFAULT;
 import static ru.granby.tabukan.model.business.interactor.keys.SingleplayerKey.CARDS_COUNT;
+import static ru.granby.tabukan.model.business.interactor.keys.SingleplayerKey.CARDS_COUNT_AFTER_INTERSTITIAL_AD;
+import static ru.granby.tabukan.model.business.interactor.keys.SingleplayerKey.CARDS_COUNT_AFTER_INTERSTITIAL_AD_DEFAULT_VALUE;
 import static ru.granby.tabukan.model.business.interactor.keys.SingleplayerKey.CURRENT_CARD;
 import static ru.granby.tabukan.model.business.interactor.keys.SingleplayerKey.CURRENT_CARD_INDEX;
 import static ru.granby.tabukan.model.business.interactor.keys.SingleplayerKey.CURRENT_CARD_INDEX_DEFAULT_VALUE;
@@ -29,6 +29,8 @@ import static ru.granby.tabukan.model.business.interactor.keys.SingleplayerKey.F
 import static ru.granby.tabukan.model.business.interactor.keys.SingleplayerKey.FIRST_LAUNCH_DEFAULT_VALUE;
 import static ru.granby.tabukan.model.business.interactor.keys.SingleplayerKey.LAST_ASSOCIATION_INDEX;
 import static ru.granby.tabukan.model.business.interactor.keys.SingleplayerKey.LAST_ASSOCIATION_INDEX_DEFAULT_VALUE;
+import static ru.granby.tabukan.model.business.interactor.keys.SingleplayerKey.REMOVE_NEEDLESS_SELECT_LETTERS_USED;
+import static ru.granby.tabukan.model.business.interactor.keys.SingleplayerKey.REMOVE_NEEDLESS_SELECT_LETTERS_USED_DEFAULT_VALUE;
 
 public class SingleplayerInteractor extends BaseInteractor implements SingleplayerContract.Interactor {
     private static final String TAG = "~SingleplayerInteractor";
@@ -41,7 +43,7 @@ public class SingleplayerInteractor extends BaseInteractor implements Singleplay
     @Override
     public Single<Integer> getCardsCountAfterInterstitialAd() {
         return get(CARDS_COUNT_AFTER_INTERSTITIAL_AD, SharedPreferencesManager.getInstance()
-                .getInt(CARDS_COUNT_AFTER_INTERSTITIAL_AD, CARDS_COUNT_AFTER_INTERSTITIAL_AD_DEFAULT));
+                .getInt(CARDS_COUNT_AFTER_INTERSTITIAL_AD, CARDS_COUNT_AFTER_INTERSTITIAL_AD_DEFAULT_VALUE));
     }
 
     @Override
@@ -52,7 +54,7 @@ public class SingleplayerInteractor extends BaseInteractor implements Singleplay
 
     @Override
     public Completable setDefaultCardsCountAfterInterstitialAd() {
-        return setCardsCountAfterInterstitialAd(CARDS_COUNT_AFTER_INTERSTITIAL_AD_DEFAULT);
+        return setCardsCountAfterInterstitialAd(CARDS_COUNT_AFTER_INTERSTITIAL_AD_DEFAULT_VALUE);
     }
 
     @Synchronized
@@ -168,5 +170,19 @@ public class SingleplayerInteractor extends BaseInteractor implements Singleplay
     public Completable setCurrentSelectLetters(List<Character> selectLetters) {
         return set(CURRENT_SELECT_LETTERS, selectLetters, SharedPreferencesManager.getInstance()
                 .putObject(CURRENT_SELECT_LETTERS, selectLetters));
+    }
+
+    @Synchronized
+    @Override
+    public Single<Boolean> isRemoveNeedlessSelectLettersUsed() {
+        return get(REMOVE_NEEDLESS_SELECT_LETTERS_USED, SharedPreferencesManager.getInstance()
+                .getBoolean(REMOVE_NEEDLESS_SELECT_LETTERS_USED, REMOVE_NEEDLESS_SELECT_LETTERS_USED_DEFAULT_VALUE));
+    }
+
+    @Synchronized
+    @Override
+    public Completable setRemoveNeedlessSelectLettersUsed(boolean value) {
+        return set(REMOVE_NEEDLESS_SELECT_LETTERS_USED, value, SharedPreferencesManager.getInstance()
+                .putBoolean(REMOVE_NEEDLESS_SELECT_LETTERS_USED, value));
     }
 }

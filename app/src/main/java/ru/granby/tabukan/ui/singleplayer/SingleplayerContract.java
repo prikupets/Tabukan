@@ -7,6 +7,7 @@ import java.util.List;
 
 import io.reactivex.rxjava3.core.Completable;
 import io.reactivex.rxjava3.core.Single;
+import lombok.Synchronized;
 import ru.granby.tabukan.model.data.database.relations.game.Association;
 import ru.granby.tabukan.model.data.database.relations.game.Card;
 import ru.granby.tabukan.ui.base.BaseContract;
@@ -45,6 +46,7 @@ public interface SingleplayerContract {
         void hideTooltips();
         void showTooltips();
         void setGameUiClickable(boolean clickable);
+        void setRemoveNeedlessSelectLettersClickable(boolean clickable);
     }
 
     interface Presenter extends BaseContract.Presenter<View, Interactor> {
@@ -82,5 +84,7 @@ public interface SingleplayerContract {
         Completable setCurrentWordLetters(List<Character> wordLetters);
         Single<List<Character>> getCurrentSelectLetters();
         Completable setCurrentSelectLetters(List<Character> selectLetters);
+        Single<Boolean> isRemoveNeedlessSelectLettersUsed();
+        Completable setRemoveNeedlessSelectLettersUsed(boolean value);
     }
 }
